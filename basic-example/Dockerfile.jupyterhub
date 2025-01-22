@@ -2,6 +2,8 @@
 # Distributed under the terms of the Modified BSD License.
 FROM quay.io/jupyterhub/jupyterhub
 
+RUN useradd -m myuser
+USER myuser
 # Install dockerspawner, nativeauthenticator
 # hadolint ignore=DL3013
 RUN python3 -m pip install --no-cache-dir \
