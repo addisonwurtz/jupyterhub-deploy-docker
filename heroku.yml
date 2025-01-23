@@ -3,7 +3,7 @@ setup:
     - plan: heroku-postgresql
       as: DATABASE
   config:
-    PORT: ${PORT}
+    PORT: $PORT
     # This username will be a JupyterHub admin
     JUPYTERHUB_ADMIN: admin
     # All containers will join this network
@@ -16,3 +16,6 @@ setup:
 build:
   docker:
     web: ./basic-example/Dockerfile
+
+run:
+  web: jupyterhub -f /srv/jupyterhub/jupyterhub_config.py --port=$PORT
