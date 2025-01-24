@@ -3,6 +3,7 @@
 ARG PORT
 FROM quay.io/jupyterhub/jupyterhub
 
+COPY jupyterhub_config.py /srv/jupyterhub/jupyterhub_config.py
 RUN useradd -m myuser
 USER myuser
 # Install dockerspawner, nativeauthenticator

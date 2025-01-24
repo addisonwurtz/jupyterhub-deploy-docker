@@ -8,7 +8,7 @@ services:
   hub:
     build:
       context: .
-      dockerfile: Dockerfile.jupyterhub
+      dockerfile: Dockerfile
       args:
         JUPYTERHUB_VERSION: latest
     restart: always
