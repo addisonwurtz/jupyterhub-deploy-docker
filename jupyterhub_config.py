@@ -13,7 +13,7 @@ c = get_config()  # noqa: F821
 #c.JupyterHub.port = os.environ["PORT"]
 
 # Spawn single-user servers as Docker containers
-c.JupyterHub.spawner_class = "dockerspawner.DockerSpawner"
+c.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'
 
 # Spawn containers from this image
 c.DockerSpawner.image = os.environ.get("DOCKER_NOTEBOOK_IMAGE")
