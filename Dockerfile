@@ -16,7 +16,9 @@ USER myuser
 #     dockerspawner \
 #     jupyterhub-nativeauthenticator
 RUN python3 -m pip install --no-cache-dir --upgrade pip && \
-    python3 -m pip install --no-cache-dir dockerspawner jupyterhub-nativeauthenticator
+    python3 -m pip install -r requirements.txt 
+    #python3 -m pip install --no-cache-dir dockerspawner jupyterhub-nativeauthenticator
+ENV PATH="$PATH:/home/myuser/.local/bin"
 
 
 CMD ["sh", "-c", "jupyterhub", "-f", "/srv/jupyterhub/jupyterhub_config.py", "--port=${PORT}"]
