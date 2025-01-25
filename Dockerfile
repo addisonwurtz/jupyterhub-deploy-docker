@@ -8,14 +8,17 @@ ARG DOCKER_NOTEBOOK_DIR
 FROM quay.io/jupyterhub/jupyterhub
 
 COPY jupyterhub_config.py /srv/jupyterhub/jupyterhub_config.py
-# RUN useradd -m myuser
-# USER myuser
-# ENV PATH="$PATH:/home/myuser/.local/bin"
-# ENV PATH="$PATH:/home/myuser/.local/lib"
+# Create non-root user
+RUN useradd -m myuser
+USER myuser
+
+# Add non-root user's directories to PATH
+ENV PATH="$PATH:/home/myuser/.local/bin:/home/myuser/.local/lib/python3.10"
+
 # Install dockerspawner, nativeauthenticator
 RUN python3 -m pip install --no-cache-dir --upgrade pip && \
-    python3 -m pip install -r requirements.txt 
-    #python3 -m pip install --no-cache-dir dockerspawner jupyterhub-nativeauthenticator
+    #python3 -m pip install -r requirements.txt 
+    python3 -m pip install --no-cache-dir dockerspawner jupyterhub-nativeauthenticator
 
 
 CMD ["sh", "-c", "jupyterhub", "-f", "/srv/jupyterhub/jupyterhub_config.py", "--port=${PORT}"]
