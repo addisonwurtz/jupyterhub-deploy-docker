@@ -8,10 +8,10 @@ ARG DOCKER_NOTEBOOK_DIR
 FROM quay.io/jupyterhub/jupyterhub
 
 COPY jupyterhub_config.py /srv/jupyterhub/jupyterhub_config.py
-COPY requirements.txt .
 RUN useradd -m myuser
 USER myuser
 ENV PATH="$PATH:/home/myuser/.local/bin"
+ENV PATH="$PATH:/home/myuser/.local/lib"
 # Install dockerspawner, nativeauthenticator
 RUN python3 -m pip install --no-cache-dir --upgrade pip && \
     python3 -m pip install -r requirements.txt 
