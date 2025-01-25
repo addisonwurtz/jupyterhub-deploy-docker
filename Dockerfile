@@ -17,7 +17,6 @@ ENV PATH="$PATH:/home/myuser/.local/bin:/home/myuser/.local/lib/python3.10"
 
 # Install dockerspawner, nativeauthenticator
 RUN python3 -m pip install --no-cache-dir --upgrade pip && \
-    #python3 -m pip install -r requirements.txt 
     python3 -m pip install --no-cache-dir dockerspawner jupyterhub-nativeauthenticator
 
 
