@@ -13,7 +13,7 @@ c = get_config()  # noqa: F821
 #c.JupyterHub.port = os.environ["PORT"]
 
 # Spawn single-user servers as Docker containers
-# c.JupyterHub.spawner_class = 'docker'
+# c.JupyterHub.spawner_class = 'sudospawner.Sudospawner'
 c.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'
 
 # Spawn containers from this image
@@ -43,11 +43,13 @@ c.DockerSpawner.debug = True
 
 # User containers will access hub by container name on the Docker network
 c.JupyterHub.hub_ip = "jupyterhub"
-c.JupyterHub.hub_port = 8080
+c.JupyterHub.hub_port = 8080 
+# c.JupyterHub.hub_connect_ip = "jupyterhub"
+# c.JupyterHub.hub_port = int(os.environ.get("PORT"))
 
 # Persist hub data on volume mounted inside container
-c.JupyterHub.cookie_secret_file = "/data/jupyterhub_cookie_secret"
-c.JupyterHub.db_url = "sqlite:////data/jupyterhub.sqlite"
+c.JupyterHub.cookie_secret_file = "/srv/jupyterhub/jupyterhub_cookie_secret"
+c.JupyterHub.db_url = "sqlite:////srv/jupyterhub/jupyterhub.sqlite"
 
 # Allow all signed-up users to login
 c.Authenticator.allow_all = True

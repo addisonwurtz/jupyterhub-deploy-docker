@@ -17,8 +17,8 @@ COPY jupyterhub_config.py /srv/jupyterhub/jupyterhub_config.py
 
 # Install dockerspawner, nativeauthenticator
 RUN python3 -m pip install --no-cache-dir --upgrade pip
-# RUN python3 -m pip install --no-cache-dir --upgrade pip && \
 RUN python3 -m pip install --no-cache-dir dockerspawner jupyterhub-nativeauthenticator
+# RUN python3 -m pip install --no-cache-dir sudospawner jupyterhub-nativeauthenticator
 
 
 CMD ["sh", "-c", "jupyterhub", "-f", "/srv/jupyterhub/jupyterhub_config.py", "--port=${PORT}"]
