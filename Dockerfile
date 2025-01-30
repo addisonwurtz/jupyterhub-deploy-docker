@@ -7,7 +7,9 @@ ARG DOCKER_NOTEBOOK_DIR
 
 FROM quay.io/jupyterhub/jupyterhub
 
-COPY jupyterhub_config.py /srv/jupyterhub/jupyterhub_config.py
+COPY jupyterhub_config.py start_jupyterhub.py /srv/jupyterhub/
+# COPY jupyterhub_config.py /srv/jupyterhub/jupyterhub_config.py
+
 # Create non-root user
 # RUN useradd -m myuser
 # USER myuser
@@ -20,5 +22,5 @@ RUN python3 -m pip install --no-cache-dir --upgrade pip
 RUN python3 -m pip install --no-cache-dir dockerspawner jupyterhub-nativeauthenticator
 # RUN python3 -m pip install --no-cache-dir sudospawner jupyterhub-nativeauthenticator
 
-
+# TODO: update CMD to reflect heroku.yml file
 CMD ["sh", "-c", "jupyterhub", "-f", "/srv/jupyterhub/jupyterhub_config.py", "--port=${PORT}"]

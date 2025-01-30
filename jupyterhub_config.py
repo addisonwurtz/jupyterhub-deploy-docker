@@ -64,3 +64,8 @@ c.NativeAuthenticator.open_signup = True
 admin = os.environ.get("JUPYTERHUB_ADMIN")
 if admin:
     c.Authenticator.admin_users = [admin]
+
+# Config to run proxy seperately from the hub
+c.JupyterHub.cleanup_servers = False
+c.ConfigurableHTTPProxy.should_start = False
+c.ConfigurableHTTPProxy.api_url = os.environ.get("PROXY_API_URL")
