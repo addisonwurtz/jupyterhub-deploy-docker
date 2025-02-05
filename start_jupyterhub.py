@@ -2,6 +2,10 @@ import os
 import requests
 
 
+# Heroku API key (use the config var if running on Heroku)
+HEROKU_API_KEY = os.getenv("HEROKU_API_KEY")
+APP_NAME = os.getenv("APP_NAME")
+
 heroku_url = "https://api.heroku.com/apps"
 
 def get_app_url(app_name=None, region="us"):
@@ -40,17 +44,10 @@ def create_heroku_app(app_name=None, region="us"):
         return None
 
 
-# Example usage
-new_app = create_heroku_app(app_name="my-new-app")
-print(new_app)
-
 if __name__ == "__main__":
 
     # Connect to Heroku Platform API:
 
-    # Heroku API key (use the config var if running on Heroku)
-    HEROKU_API_KEY = os.getenv("HEROKU_API_KEY")
-    APP_NAME = os.getenv("APP_NAME")
 
     # query for current app url
     app_info = get_app_url(app_name=APP_NAME)
