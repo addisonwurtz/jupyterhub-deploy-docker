@@ -45,7 +45,9 @@ if __name__ == "__main__":
 
     # query for current app url
     app_info = get_app_info(app_name=APP_NAME)
-    print(f"App url: {app_info["web_url"]}")
+    print(app_info["web_url"])
+    print(f"App url: {app_info['web_url']}")
+    print("App url: " + app_info["web_url"])
 
     # create new app to run proxy 
 
