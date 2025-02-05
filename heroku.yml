@@ -29,6 +29,6 @@ build:
 
 
 run:
-  web: python3 start_jupyterhub.py
+  web: ./start_hub 
   # web: jupyterhub -f /srv/jupyterhub/jupyterhub_config.py --port=$PORT
   # worker: python3 start_proxy.py

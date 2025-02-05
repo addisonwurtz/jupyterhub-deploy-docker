@@ -46,8 +46,8 @@ def create_heroku_app(app_name=None, region="us"):
 
 if __name__ == "__main__":
 
-    # Connect to Heroku Platform API:
-
+    # start Jupyterhub
+        
 
     # query for current app url
     app_info = get_app_url(app_name=APP_NAME)
