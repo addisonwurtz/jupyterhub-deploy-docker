@@ -44,12 +44,12 @@ def create_heroku_app(app_name=None, region="us"):
 if __name__ == "__main__":
 
     # query for current app url
-    app_info = get_app_info(app_name=APP_NAME)
-    print(app_info["web_url"])
-    print(f"App url: {app_info['web_url']}")
-    print("App url: " + app_info["web_url"])
+    hub_info = get_app_info(app_name=APP_NAME)
+    hub_url = hub_info["web_url"]
 
     # create new app to run proxy 
+    # TODO make proxy app name ENV var
+    proxy_info = create_heroku_app(app_name="jupyterhub-proxy-server")
 
     # set config variables to hub address
 
