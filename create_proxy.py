@@ -15,9 +15,10 @@ def get_app_url(app_name=None, region="us"):
         "Accept": "application/vnd.heroku+json; version=3",
         "Content-Type": "application/json",
     }
-    payload = {"name": app_name, "region": region} if app_name else {"region": region}
-
-    response = requests.get(heroku_url, headers=headers, json=payload) 
+    #payload = {"name": app_name, "region": region} if app_name else {"region": region}
+    request_url = heroku_url + "/" + app_name
+    response = requests.get(request_url, headers=headers) 
+    #response = requests.get(heroku_url, headers=headers, json=payload) 
     
     if response.status_code == 200:
         app_info = response.json()
