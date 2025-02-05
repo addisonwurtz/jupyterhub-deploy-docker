@@ -1,5 +1,6 @@
 import os
 import requests
+import json
 
 
 # Heroku API key (use the config var if running on Heroku)
@@ -19,7 +20,10 @@ def get_app_url(app_name=None, region="us"):
     response = requests.get(heroku_url, headers=headers, json=payload) 
     
     if response.status_code == 200:
-        return response.json()  # Returns app details 
+        app_info = response.json()
+        for each in app_info:
+            print(each)
+        return app_info # Returns app details 
     else:
         print(f"Failed to get app info: {response.status_code}, {response.text}")
         return None
@@ -51,7 +55,6 @@ if __name__ == "__main__":
 
     # query for current app url
     app_info = get_app_url(app_name=APP_NAME)
-    print(app_info)
     print(app_info["web_url"])
 
     # create new app to run proxy 
