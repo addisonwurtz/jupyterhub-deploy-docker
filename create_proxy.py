@@ -18,7 +18,7 @@ def get_app_url(app_name=None, region="us"):
 
     response = requests.get(heroku_url, headers=headers, json=payload) 
     
-    if response.status_code == 201:
+    if response.status_code == 200:
         return response.json()  # Returns app details 
     else:
         print(f"Failed to get app info: {response.status_code}, {response.text}")
@@ -46,8 +46,8 @@ def create_heroku_app(app_name=None, region="us"):
 
 if __name__ == "__main__":
 
-    print("API key: ")
-    print(HEROKU_API_KEY)
+    #print("API key: ")
+    #print(HEROKU_API_KEY)
 
     # query for current app url
     app_info = get_app_url(app_name=APP_NAME)
