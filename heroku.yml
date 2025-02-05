@@ -17,7 +17,7 @@ setup:
 build:
   docker:
     web: Dockerfile
-  config:
+  #config:
     # This username will be a JupyterHub admin
     # JUPYTERHUB_ADMIN: admin
     # All containers will join this network
