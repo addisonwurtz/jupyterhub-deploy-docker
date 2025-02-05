@@ -3,7 +3,7 @@ import requests
 
 
 # Heroku API key (use the config var if running on Heroku)
-HEROKU_API_KEY = os.getenv("HEROKU_API_KEY")
+HEROKU_API_KEY = os.getenv("API_KEY")
 APP_NAME = os.getenv("APP_NAME")
 
 heroku_url = "https://api.heroku.com/apps"
