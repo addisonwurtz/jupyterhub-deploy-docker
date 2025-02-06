@@ -18,15 +18,10 @@
 # terminal interface a little prettier:
 export PS1='\[\033[01;34m\]\w\[\033[00m\]\$'
 
-echo "Starting Jupyterhub"
-# NOTE: With allow_origin='*', anyone with the URL and password can potentially access your notebook,
-# so be careful w/ the URL and password. Don't put sensitive data up here.
-jupyterhub \
-    #--no-browser --ip=0.0.0.0 --port=$PORT \
-    #--ServerApp.allow_origin='*' --ServerApp.allow_credentials=True \
-    #$JUPYTER_NOTEBOOK_ARGS \
-echo "Hub is running..."
-
-echo "Starting proxy server app"
+echo "Creating app for proxy server"
 python3 create_proxy.py
-echo "Proxy server is running..."
+echo "Proxy server app created"
+
+echo "Starting Jupyterhub"
+jupyterhub 
+echo "Hub is running..."
