@@ -21,6 +21,10 @@ headers = {
 # Get app info using Heroku API
 def get_app_info(app_name=None, region="us"):
     request_url = heroku_url + "/" + app_name
+
+    print(f"Headers: {headers}")
+    print(f"Request URL: {request_url}")
+    
     response = requests.get(url=request_url, headers=headers) 
     
     if response.status_code == 200:
@@ -61,12 +65,20 @@ def set_config_vars(app_name, config_vars:dict):
 if __name__ == "__main__":
 
     # query for current app url
+    print("Getting hub app info...")
     hub_info = get_app_info(app_name=HUB_APP_NAME)
     hub_url = hub_info["web_url"]
+    print("Hub info: ")
+    for item in hub_info:
+        print(item)
 
     # create new app to run proxy 
+    print("Getting proxy app info...")
     proxy_info = create_heroku_app(app_name=PROXY_APP_NAME)
     proxy_url = proxy_info["web_url"]
+    print("Proxy info: ")
+    for item in proxy_info:
+        print(item)
 
     # Set config variable for proxy_url in hub app
     set_config_vars(app_name=HUB_APP_NAME, config_vars={"PROXY_URL": proxy_url})
@@ -80,6 +92,8 @@ if __name__ == "__main__":
                     } 
     set_config_vars(app_name=PROXY_APP_NAME, config_vars=proxy_config_vars)
 
+    print("proxy git url: ")
+    print(proxy_info["git_url"])
     # release proxy container
 
     # query for proxy uri and port
