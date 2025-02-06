@@ -69,3 +69,4 @@ if admin:
 c.JupyterHub.cleanup_servers = False
 c.ConfigurableHTTPProxy.should_start = False
 c.ConfigurableHTTPProxy.api_url = os.environ.get("PROXY_URL")
+c.ConfigurableHTTPProxy.auth_token = os.environ.get("PROXY_AUTH_TOKEN")

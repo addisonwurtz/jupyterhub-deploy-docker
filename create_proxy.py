@@ -8,6 +8,7 @@ HEROKU_API_KEY = os.getenv("API_KEY")
 HUB_APP_NAME = os.getenv("APP_NAME")
 HUB_PORT = os.getenv("PORT")
 PROXY_APP_NAME = os.getenv("PROXY_NAME")
+PROXY_AUTH_TOKEN = os.getenv("PROXY_AUTH_TOKEN")
 
 heroku_url = "https://api.heroku.com/apps"
 
@@ -74,7 +75,8 @@ if __name__ == "__main__":
     proxy_config_vars = {
                     "HUB_URL": hub_url, 
                     "HUB_PORT": HUB_PORT, 
-                    "APP_NAME": PROXY_APP_NAME
+                    "APP_NAME": PROXY_APP_NAME,
+                    "PROXY_AUTH_TOKEN": PROXY_AUTH_TOKEN
                     } 
     set_config_vars(app_name=PROXY_APP_NAME, config_vars=proxy_config_vars)
 
