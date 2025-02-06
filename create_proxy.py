@@ -38,7 +38,7 @@ def create_heroku_app(app_name=None, region="us"):
     if response.status_code == 201:
         print("App created successfully!")
         return response.json()  # Returns details of the new app
-    elif response.status_code == 422 and response.text == "Name jupyterhub-proxy-server is already taken":
+    elif response.status_code == 422: # and response.text["message"] == "Name jupyterhub-proxy-server is already taken":
         print("This app aready exists.")
         print("Getting app info...")
         return get_app_info(app_name=app_name)
@@ -50,7 +50,7 @@ def set_config_vars(app_name, config_vars:dict):
     request_url = heroku_url + "/" + app_name + "/config-vars"
     response = requests.patch(url=request_url, headers=headers, json=config_vars)
 
-    if response.status_code == 201:
+    if response.status_code == 200:
         print("Config vars updated successfully")
         print(response.text)
     else:
