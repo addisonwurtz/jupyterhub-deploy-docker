@@ -1,19 +1,5 @@
 #!/usr/bin/env bash
 
-#echo "Starting pgcontents initialization"
-#echo "DATABASE_URL is $DATABASE_URL"
-#pgcontents init --no-prompt -l $DATABASE_URL || exit 1
-
-#echo "pgcontents initialized"
-
-#echo "Installing Jupyter extensions"
-#jupyter contrib nbextension install --user
-#echo "Extensions installed"
-
-#echo "Enabling nbextensions configurator"
-#jupyter nbextensions_configurator enable --user
-#echo "Nbextensions configurator enabled"
-
 # heroku will override $PS1 when specified as a config var, so we'll set it here to make the jupyter
 # terminal interface a little prettier:
 export PS1='\[\033[01;34m\]\w\[\033[00m\]\$'
