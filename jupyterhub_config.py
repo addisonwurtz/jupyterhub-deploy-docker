@@ -68,4 +68,4 @@ if admin:
 # Config to run proxy seperately from the hub
 c.JupyterHub.cleanup_servers = False
 c.ConfigurableHTTPProxy.should_start = False
-c.ConfigurableHTTPProxy.api_url = os.environ.get("PROXY_API_URL")
+c.ConfigurableHTTPProxy.api_url = os.environ.get("PROXY_URL")
