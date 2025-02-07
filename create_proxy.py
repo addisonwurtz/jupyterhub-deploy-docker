@@ -64,18 +64,23 @@ def set_config_vars(app_name, config_vars:dict):
         return None
 
 def get_api_key():
+    print("Generating API key...")
     api_key_request_headers = {
     "Authorization": f"Bearer {HEROKU_AUTH_TOKEN}",
     "Accept": "application/vnd.heroku+json; version=3",
     "Content-Type": "application/json",
     "description": "heroku api key"
     }
+    print("API key request header:")
+    print(api_key_request_headers)
     response = requests.post(url="https://id.heroku.com/oauth/authorizations", headers=api_key_request_headers)
-    
+
+    print(response) 
+
     if response.status_code == 200:
         return response.json()["token"] 
     else:
-        print(f"Failed to get app info: {response.status_code}, {response.text}")
+        print(f"Failed to generate API key: {response.status_code}, {response.text}")
         # TODO throw exception
         return None
 
@@ -89,6 +94,13 @@ if __name__ == "__main__":
         HEROKU_API_KEY = get_api_key()
         # set config variable for hub app
         set_config_vars(app_name=HUB_APP_NAME, config_vars={"HEROKU_API_KEY": HEROKU_API_KEY})
+        print(f"HEROKU_API_KEY: {HEROKU_API_KEY}")
+        # Update headers to include new API key 
+        headers = {
+        "Authorization": f"Bearer {HEROKU_API_KEY}",
+        "Accept": "application/vnd.heroku+json; version=3",
+        "Content-Type": "application/json",
+        }
 
     # query for current app url
     print("Getting hub app info...")
