@@ -2,8 +2,7 @@ import os
 import requests
 
 
-HEROKU_AUTH_TOKEN = os.getenv("HEROKU_AUTH_TOKEN")
-HEROKU_API_KEY = os.getenv("API_KEY")
+HEROKU_AUTH_TOKEN = os.getenv("API_KEY")
 HUB_APP_NAME = os.getenv("APP_NAME")
 HUB_PORT = os.getenv("PORT")
 PROXY_APP_NAME = os.getenv("PROXY_NAME")
@@ -12,7 +11,7 @@ PROXY_AUTH_TOKEN = os.getenv("PROXY_AUTH_TOKEN")
 heroku_url = "https://api.heroku.com/apps"
 
 headers = {
-    "Authorization": f"Bearer {HEROKU_API_KEY}",
+    "Authorization": f"Bearer {HEROKU_AUTH_TOKEN}",
     "Accept": "application/vnd.heroku+json; version=3",
     "Content-Type": "application/json",
 }
@@ -63,44 +62,9 @@ def set_config_vars(app_name, config_vars:dict):
         print(f"Failed to update config vars: {response.status_code}, {response.text}")
         return None
 
-def get_api_key():
-    print("Generating API key...")
-    api_key_request_headers = {
-    "Authorization": f"Bearer {HEROKU_AUTH_TOKEN}",
-    "Accept": "application/vnd.heroku+json; version=3",
-    "Content-Type": "application/json",
-    "description": "heroku api key"
-    }
-    print("API key request header:")
-    print(api_key_request_headers)
-    response = requests.post(url="https://api.heroku.com/oauth/authorizations", headers=api_key_request_headers)
-
-    print(response) 
-
-    if response.status_code == 200:
-        return response.json()["token"] 
-    else:
-        print(f"Failed to generate API key: {response.status_code}, {response.text}")
-        # TODO throw exception
-        return None
 
 
 if __name__ == "__main__":
-
-    # check for API key
-    if HEROKU_API_KEY is None:
-        print(f"HEROKU_API_KEY: {HEROKU_API_KEY}")
-        print(f"HEROKU_AUTH_TOKEN: {HEROKU_AUTH_TOKEN}")
-        HEROKU_API_KEY = get_api_key()
-        # set config variable for hub app
-        set_config_vars(app_name=HUB_APP_NAME, config_vars={"HEROKU_API_KEY": HEROKU_API_KEY})
-        print(f"HEROKU_API_KEY: {HEROKU_API_KEY}")
-        # Update headers to include new API key 
-        headers = {
-        "Authorization": f"Bearer {HEROKU_API_KEY}",
-        "Accept": "application/vnd.heroku+json; version=3",
-        "Content-Type": "application/json",
-        }
 
     # query for current app url
     print("Getting hub app info...")
