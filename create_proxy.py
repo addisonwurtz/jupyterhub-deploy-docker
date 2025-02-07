@@ -73,7 +73,7 @@ def get_api_key():
     }
     print("API key request header:")
     print(api_key_request_headers)
-    response = requests.post(url="https://id.heroku.com/oauth/authorizations", headers=api_key_request_headers)
+    response = requests.post(url="https://api.heroku.com/oauth/authorizations", headers=api_key_request_headers)
 
     print(response) 
 
