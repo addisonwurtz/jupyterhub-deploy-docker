@@ -1,9 +1,8 @@
 import os
 import requests
-import json
 
 
-# Heroku API key (use the config var if running on Heroku)
+HEROKU_AUTH_TOKEN = os.getenv("HEROKU_AUTH_TOKEN")
 HEROKU_API_KEY = os.getenv("API_KEY")
 HUB_APP_NAME = os.getenv("APP_NAME")
 HUB_PORT = os.getenv("PORT")
@@ -43,10 +42,12 @@ def create_heroku_app(app_name=None, region="us"):
     if response.status_code == 201:
         print("App created successfully!")
         return response.json()  # Returns details of the new app
-    elif response.status_code == 422: # and response.text["message"] == "Name jupyterhub-proxy-server is already taken":
-        print("This app aready exists.")
-        print("Getting app info...")
-        return get_app_info(app_name=app_name)
+        """
+        elif response.status_code == 422: # and response.text["message"] == "Name jupyterhub-proxy-server is already taken":
+            print("This app aready exists.")
+            print("Getting app info...")
+            return get_app_info(app_name=app_name)
+        """
     else:
         print(f"Failed to create app: {response.status_code}, {response.text}")
         return None
@@ -62,7 +63,30 @@ def set_config_vars(app_name, config_vars:dict):
         print(f"Failed to update config vars: {response.status_code}, {response.text}")
         return None
 
+def get_api_key():
+    api_key_request_headers = {
+    "Authorization": f"Bearer {HEROKU_AUTH_TOKEN}",
+    "Accept": "application/vnd.heroku+json; version=3",
+    "Content-Type": "application/json",
+    "description": "heroku api key"
+    }
+    response = requests.post(url="https://id.heroku.com/oauth/authorizations", headers=api_key_request_headers)
+    
+    if response.status_code == 200:
+        return response.json()["token"] 
+    else:
+        print(f"Failed to get app info: {response.status_code}, {response.text}")
+        # TODO throw exception
+        return None
+
+
 if __name__ == "__main__":
+
+    # check for API key
+    if HEROKU_API_KEY is None:
+        HEROKU_API_KEY = get_api_key()
+        # set config variable for hub app
+        set_config_vars(app_name=HUB_APP_NAME, config_vars={"HEROKU_API_KEY": HEROKU_API_KEY})
 
     # query for current app url
     print("Getting hub app info...")
