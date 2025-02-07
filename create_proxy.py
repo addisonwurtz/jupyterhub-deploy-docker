@@ -84,6 +84,8 @@ if __name__ == "__main__":
 
     # check for API key
     if HEROKU_API_KEY is None:
+        print(f"HEROKU_API_KEY: {HEROKU_API_KEY}")
+        print(f"HEROKU_AUTH_TOKEN: {HEROKU_AUTH_TOKEN}")
         HEROKU_API_KEY = get_api_key()
         # set config variable for hub app
         set_config_vars(app_name=HUB_APP_NAME, config_vars={"HEROKU_API_KEY": HEROKU_API_KEY})
