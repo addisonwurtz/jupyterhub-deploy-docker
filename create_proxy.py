@@ -2,7 +2,9 @@ import os
 import requests
 
 
+#TODO rename config vars for clarity
 HEROKU_AUTH_TOKEN = os.getenv("API_KEY")
+HEROKU_PERMANENT_TOKEN = os.getenv("HEROKU_PERMANTENT_TOKEN")
 HUB_APP_NAME = os.getenv("APP_NAME")
 HUB_PORT = os.getenv("PORT")
 PROXY_APP_NAME = os.getenv("PROXY_NAME")
@@ -62,9 +64,31 @@ def set_config_vars(app_name, config_vars:dict):
         print(f"Failed to update config vars: {response.status_code}, {response.text}")
         return None
 
+def get_permanent_token():
+    token_request_url = "https://api.heroku.com/oauth/authorizations"
+    token_request_headers = {
+    "Authorization": f"Bearer {HEROKU_AUTH_TOKEN}",
+    "Accept": "application/vnd.heroku+json; version=3",
+    "Content-Type": "application/json",
+    "description": "Permantent auth token for Heroku API",
+    }
+    response = requests.post(url=token_request_url, headers=token_request_headers)
+    return response.json()
+    
+    if response.status_code == 200:
+        print("Permantent authentication token successfully created")
+        print(response.text)
+    else:
+        print(f"Failed to create auth token: {response.status_code}, {response.text}")
+        return None
 
 
 if __name__ == "__main__":
+
+    # Check for permanent token and create if necessary
+    if HEROKU_PERMANENT_TOKEN is None:
+        token_info = get_permanent_token()
+        print(token_info)
 
     # query for current app url
     print("Getting hub app info...")
