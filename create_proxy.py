@@ -3,7 +3,7 @@ import requests
 
 
 #TODO rename config vars for clarity
-HEROKU_AUTH_TOKEN = os.getenv("API_KEY")
+HEROKU_AUTH_TOKEN = os.getenv("HEROKU_AUTH_TOKEN")
 HEROKU_PERMANENT_TOKEN = os.getenv("HEROKU_PERMANTENT_TOKEN")
 HUB_APP_NAME = os.getenv("APP_NAME")
 HUB_PORT = os.getenv("PORT")
