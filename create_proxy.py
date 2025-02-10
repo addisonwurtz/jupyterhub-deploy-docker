@@ -104,7 +104,7 @@ if __name__ == "__main__":
     proxy_url = proxy_info["web_url"]
     print("Proxy info: ")
     for item in proxy_info:
-        print(item)
+        print(f"{item}: {proxy_info[item]}")
 
     # Set config variable for proxy_url in hub app
     set_config_vars(app_name=HUB_APP_NAME, config_vars={"PROXY_URL": proxy_url})
