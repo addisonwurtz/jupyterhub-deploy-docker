@@ -43,13 +43,10 @@ def create_heroku_app(app_name=None, region="us"):
     if response.status_code == 201:
         print("App created successfully!")
         return response.json()  # Returns details of the new app
-    # TODO fix this elif to catch this specfic error and log helpful message
-        """
-        elif response.status_code == 422: # and response.text["message"] == "Name jupyterhub-proxy-server is already taken":
-            print("This app aready exists.")
-            print("Getting app info...")
-            return get_app_info(app_name=app_name)
-        """
+    elif response.status_code == 422 and response.json()["message"] == "Name jupyterhub-proxy-server is already taken":
+        print("This app aready exists.")
+        print("Getting app info...")
+        return get_app_info(app_name=app_name)
     else:
         print(f"Failed to create app: {response.status_code}, {response.text}")
         return None
