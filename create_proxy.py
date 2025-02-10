@@ -3,9 +3,9 @@ import requests
 
 
 #TODO rename config vars for clarity
-HEROKU_AUTH_TOKEN = os.getenv("HEROKU_AUTH_TOKEN")
-HEROKU_PERMANENT_TOKEN = os.getenv("HEROKU_PERMANTENT_TOKEN")
 HUB_APP_NAME = os.getenv("APP_NAME")
+HEROKU_AUTH_TOKEN = os.getenv("HEROKU_AUTH_TOKEN")
+# HEROKU_PERMANENT_TOKEN = os.getenv("HEROKU_PERMANTENT_TOKEN")
 HUB_PORT = os.getenv("PORT")
 PROXY_APP_NAME = os.getenv("PROXY_NAME")
 PROXY_AUTH_TOKEN = os.getenv("PROXY_AUTH_TOKEN")
@@ -43,6 +43,7 @@ def create_heroku_app(app_name=None, region="us"):
     if response.status_code == 201:
         print("App created successfully!")
         return response.json()  # Returns details of the new app
+    # TODO fix this elif to catch this specfic error and log helpful message
         """
         elif response.status_code == 422: # and response.text["message"] == "Name jupyterhub-proxy-server is already taken":
             print("This app aready exists.")
@@ -70,7 +71,7 @@ def get_permanent_token():
     "Authorization": f"Bearer {HEROKU_AUTH_TOKEN}",
     "Accept": "application/vnd.heroku+json; version=3",
     "Content-Type": "application/json",
-    "description": "Permantent auth token for Heroku API",
+    "description": "Permanent auth token for Heroku API",
     }
     response = requests.post(url=token_request_url, headers=token_request_headers)
     return response.json()
@@ -86,9 +87,11 @@ def get_permanent_token():
 if __name__ == "__main__":
 
     # Check for permanent token and create if necessary
-    if HEROKU_PERMANENT_TOKEN is None:
-        token_info = get_permanent_token()
-        print(token_info)
+    #if HEROKU_PERMANENT_TOKEN is None:
+    #token_info = get_permanent_token()
+    #    print(token_info)
+    #    print(token_info["token"])
+    #    set_config_vars(app_name=HUB_APP_NAME, config_vars={"HEROKU_PERMANENT_TOKEN": token_info["token"]})
 
     # query for current app url
     print("Getting hub app info...")
@@ -114,7 +117,8 @@ if __name__ == "__main__":
                     "HUB_URL": hub_url, 
                     "HUB_PORT": HUB_PORT, 
                     "APP_NAME": PROXY_APP_NAME,
-                    "PROXY_AUTH_TOKEN": PROXY_AUTH_TOKEN
+                    "PROXY_AUTH_TOKEN": PROXY_AUTH_TOKEN,
+                    "HEROKU_AUTH_TOKEN": HEROKU_AUTH_TOKEN
                     } 
     set_config_vars(app_name=PROXY_APP_NAME, config_vars=proxy_config_vars)
 
