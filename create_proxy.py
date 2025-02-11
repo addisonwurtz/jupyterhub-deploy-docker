@@ -40,12 +40,14 @@ def create_heroku_app(app_name=None, region="us"):
     payload = {"name": app_name, "region": region, "stack": "container"} if app_name else {"region": region}
 
     if TEAM_NAME is None:
+        print("No team name.")
         request_url = heroku_url
     else:
+        print(f"Team name is {TEAM_NAME}")
         request_url = heroku_team_url
         payload["team"] = TEAM_NAME
 
-    response = requests.post(heroku_url, headers=headers, json=payload)
+    response = requests.post(request_url, headers=headers, json=payload)
     
     if response.status_code == 201:
         print("App created successfully!")
