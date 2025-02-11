@@ -4,7 +4,9 @@ import requests
 
 #TODO rename config vars for clarity
 HUB_APP_NAME = os.getenv("APP_NAME")
-HEROKU_AUTH_TOKEN = os.getenv("HEROKU_AUTH_TOKEN")
+# HEROKU_AUTH_TOKEN = os.getenv("HEROKU_AUTH_TOKEN")
+# Use my auth token for testing app team assignment
+HEROKU_AUTH_TOKEN = "HRKU-50603fd0-2b1f-4fe9-8281-be292c55f80d"
 # HEROKU_PERMANENT_TOKEN = os.getenv("HEROKU_PERMANTENT_TOKEN")
 HUB_PORT = os.getenv("PORT")
 PROXY_APP_NAME = os.getenv("PROXY_NAME")
@@ -36,7 +38,7 @@ def get_app_info(app_name=None, region="us"):
 
 # Create a new Heroku app
 def create_heroku_app(app_name=None, region="us"):
-    payload = {"name": app_name, "region": region} if app_name else {"region": region}
+    payload = {"name": app_name, "region": region, "team:name": "heroku-ai-oss" } if app_name else {"region": region}
     
     response = requests.post(heroku_url, headers=headers, json=payload)
     
