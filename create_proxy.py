@@ -4,10 +4,7 @@ import requests
 
 #TODO rename config vars for clarity
 HUB_APP_NAME = os.getenv("APP_NAME")
-# HEROKU_AUTH_TOKEN = os.getenv("HEROKU_AUTH_TOKEN")
-# Use my auth token for testing app team assignment
-HEROKU_AUTH_TOKEN = "HRKU-50603fd0-2b1f-4fe9-8281-be292c55f80d"
-# HEROKU_PERMANENT_TOKEN = os.getenv("HEROKU_PERMANTENT_TOKEN")
+HEROKU_AUTH_TOKEN = os.getenv("HEROKU_AUTH_TOKEN")
 HUB_PORT = os.getenv("PORT")
 PROXY_APP_NAME = os.getenv("PROXY_NAME")
 PROXY_AUTH_TOKEN = os.getenv("PROXY_AUTH_TOKEN")
