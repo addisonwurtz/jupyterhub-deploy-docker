@@ -17,6 +17,10 @@ COPY start_hub jupyterhub_config.py create_proxy.py /srv/jupyterhub/
 # Add non-root user's directories to PATH
 # ENV PATH="$PATH:/home/myuser/.local/bin:/home/myuser/.local/lib/python3.10"
 
+# Install git
+RUN apt update
+RUN apt install -y git
+
 # Install dockerspawner, nativeauthenticator
 RUN python3 -m pip install --no-cache-dir --upgrade pip
 RUN python3 -m pip install --no-cache-dir dockerspawner jupyterhub-nativeauthenticator

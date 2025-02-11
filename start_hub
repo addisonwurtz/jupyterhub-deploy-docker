@@ -8,6 +8,9 @@ echo "Creating app for proxy server"
 python3 create_proxy.py
 echo "Proxy server app created"
 
+# echo "Pushing container image to proxy server"
+
+
 echo "Starting Jupyterhub"
 jupyterhub 
 echo "Hub is running..."
