@@ -132,7 +132,7 @@ if __name__ == "__main__":
                     } 
     set_config_vars(app_name=PROXY_APP_NAME, config_vars=proxy_config_vars)
 
-    print("Proxy server successfully created!")
+    print("Proxy server is running...") 
 
 
 
