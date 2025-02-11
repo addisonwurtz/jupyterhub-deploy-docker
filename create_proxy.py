@@ -66,8 +66,7 @@ def set_config_vars(app_name, config_vars:dict):
     response = requests.patch(url=request_url, headers=headers, json=config_vars)
 
     if response.status_code == 200:
-        print("Config vars updated successfully")
-        print(response.text)
+        print(f"Config vars for {app_name} updated successfully")
     else:
         print(f"Failed to update config vars: {response.status_code}, {response.text}")
         return None
@@ -81,11 +80,11 @@ def get_permanent_token():
     "description": "Permanent auth token for Heroku API",
     }
     response = requests.post(url=token_request_url, headers=token_request_headers)
-    return response.json()
     
     if response.status_code == 200:
         print("Permantent authentication token successfully created")
         print(response.text)
+        return response.json()
     else:
         print(f"Failed to create auth token: {response.status_code}, {response.text}")
         return None
