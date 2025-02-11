@@ -8,6 +8,7 @@ HEROKU_AUTH_TOKEN = os.getenv("HEROKU_AUTH_TOKEN")
 HUB_PORT = os.getenv("PORT")
 PROXY_APP_NAME = os.getenv("PROXY_NAME")
 PROXY_AUTH_TOKEN = os.getenv("PROXY_AUTH_TOKEN")
+# TODO I don't think I actually need team name... remove...
 TEAM_NAME = os.getenv("TEAM_NAME")
 
 heroku_url = "https://api.heroku.com/apps"
@@ -92,6 +93,7 @@ def get_permanent_token():
 
 if __name__ == "__main__":
 
+    # TODO helpful error for expired tokens
     # Check for permanent token and create if necessary
     #if HEROKU_PERMANENT_TOKEN is None:
     #token_info = get_permanent_token()
@@ -99,10 +101,9 @@ if __name__ == "__main__":
     #    print(token_info["token"])
     #    set_config_vars(app_name=HUB_APP_NAME, config_vars={"HEROKU_PERMANENT_TOKEN": token_info["token"]})
 
-    # query for current app url
+    # query for current (hub) app url
     print("Getting hub app info...")
     hub_info = get_app_info(app_name=HUB_APP_NAME)
-    hub_url = hub_info["web_url"]
     print("Hub info: ")
     for item in hub_info:
         print(f"{item}: {hub_info[item]}")
@@ -110,17 +111,20 @@ if __name__ == "__main__":
     # create new app to run proxy 
     print("Getting proxy app info...")
     proxy_info = create_heroku_app(app_name=PROXY_APP_NAME)
-    proxy_url = proxy_info["web_url"]
     print("Proxy info: ")
     for item in proxy_info:
         print(f"{item}: {proxy_info[item]}")
 
+    print("Saving proxy info to hub...")
     # Set config variable for proxy_url in hub app
-    set_config_vars(app_name=HUB_APP_NAME, config_vars={"PROXY_URL": proxy_url})
+    set_config_vars(app_name=HUB_APP_NAME, config_vars={
+        "PROXY_WEB_URL": proxy_info["web_url"],
+        "PROXY_GIT_URL": proxy_info["git_url"]})
 
     # set config variables to hub address
+    print("Saving app info to proxy app...")
     proxy_config_vars = {
-                    "HUB_URL": hub_url, 
+                    "HUB_WEB_URL": hub_info["web_url"], 
                     "HUB_PORT": HUB_PORT, 
                     "APP_NAME": PROXY_APP_NAME,
                     "PROXY_AUTH_TOKEN": PROXY_AUTH_TOKEN,
@@ -128,13 +132,7 @@ if __name__ == "__main__":
                     } 
     set_config_vars(app_name=PROXY_APP_NAME, config_vars=proxy_config_vars)
 
-    print("proxy git url: ")
-    print(proxy_info["git_url"])
-    # release proxy container
+    print("Proxy server successfully created!")
 
-    # query for proxy uri and port
 
-    # user proxy info to set config in hub
-
-    # check that hub and proxy have connected
 
