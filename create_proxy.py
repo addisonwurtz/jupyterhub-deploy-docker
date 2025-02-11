@@ -11,8 +11,10 @@ HEROKU_AUTH_TOKEN = "HRKU-50603fd0-2b1f-4fe9-8281-be292c55f80d"
 HUB_PORT = os.getenv("PORT")
 PROXY_APP_NAME = os.getenv("PROXY_NAME")
 PROXY_AUTH_TOKEN = os.getenv("PROXY_AUTH_TOKEN")
+TEAM_NAME = os.getenv("TEAM_NAME")
 
 heroku_url = "https://api.heroku.com/apps"
+heroku_team_url = "https://api.heroku.com/teams/apps"
 
 headers = {
     "Authorization": f"Bearer {HEROKU_AUTH_TOKEN}",
@@ -38,8 +40,14 @@ def get_app_info(app_name=None, region="us"):
 
 # Create a new Heroku app
 def create_heroku_app(app_name=None, region="us"):
-    payload = {"name": app_name, "region": region, "team:name": "heroku-ai-oss" } if app_name else {"region": region}
-    
+    payload = {"name": app_name, "region": region, "stack": "container"} if app_name else {"region": region}
+
+    if TEAM_NAME is None:
+        request_url = heroku_url
+    else:
+        request_url = heroku_team_url
+        payload["team"] = TEAM_NAME
+
     response = requests.post(heroku_url, headers=headers, json=payload)
     
     if response.status_code == 201:
@@ -98,7 +106,7 @@ if __name__ == "__main__":
     hub_url = hub_info["web_url"]
     print("Hub info: ")
     for item in hub_info:
-        print(item)
+        print(f"{item}: {hub_info[item]}")
 
     # create new app to run proxy 
     print("Getting proxy app info...")
