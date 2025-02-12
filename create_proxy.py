@@ -89,6 +89,15 @@ def get_permanent_token():
         print(f"Failed to create auth token: {response.status_code}, {response.text}")
         return None
 
+def create_build(app_name, source_blob):
+    build_request_url = heroku_url + f"/{app_name}/builds"
+
+    response = requests.post(url=build_request_url, headers=headers, json=source_blob)
+    if response.status_code == 200:
+        print(f"{app_name} build successfully created")
+        return response.json()
+    else:
+        print(f"Failed to create build for {app_name}: {response.status_code}, {response.text}")
 
 if __name__ == "__main__":
 
@@ -131,6 +140,9 @@ if __name__ == "__main__":
                     } 
     set_config_vars(app_name=PROXY_APP_NAME, config_vars=proxy_config_vars)
 
+    # Create build for proxy server app
+
+    
     print("Proxy server is running...") 
 
 
