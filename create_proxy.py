@@ -58,6 +58,7 @@ def create_heroku_app(app_name=None, region="us"):
         print(f"Failed to create app: {response.status_code}, {response.text}")
         return None
 
+
 def set_config_vars(app_name, config_vars:dict):
     request_url = heroku_url + "/" + app_name + "/config-vars"
     response = requests.patch(url=request_url, headers=headers, json=config_vars)
@@ -67,6 +68,7 @@ def set_config_vars(app_name, config_vars:dict):
     else:
         print(f"Failed to update config vars: {response.status_code}, {response.text}")
         return None
+
 
 def get_permanent_token():
     token_request_url = "https://api.heroku.com/oauth/authorizations"
@@ -86,6 +88,7 @@ def get_permanent_token():
         print(f"Failed to create auth token: {response.status_code}, {response.text}")
         return None
 
+
 def create_build(app_name, source_blob={"checksum": None, "url": None, "version": None, "version_description": None }):
     build_request_url = heroku_url + f"/{app_name}/builds"
 
@@ -95,6 +98,7 @@ def create_build(app_name, source_blob={"checksum": None, "url": None, "version"
         return response.json()
     else:
         print(f"Failed to create build for {app_name}: {response.status_code}, {response.text}")
+
 
 if __name__ == "__main__":
 
