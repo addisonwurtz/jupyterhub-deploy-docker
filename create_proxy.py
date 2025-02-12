@@ -89,7 +89,7 @@ def get_permanent_token():
         print(f"Failed to create auth token: {response.status_code}, {response.text}")
         return None
 
-def create_build(app_name, source_blob):
+def create_build(app_name, source_blob={"checksum": None, "url": None, "version": None, "version_description": None }):
     build_request_url = heroku_url + f"/{app_name}/builds"
 
     response = requests.post(url=build_request_url, headers=headers, json=source_blob)
@@ -141,8 +141,11 @@ if __name__ == "__main__":
     set_config_vars(app_name=PROXY_APP_NAME, config_vars=proxy_config_vars)
 
     # Create build for proxy server app
-
-    
+    print("Attempting to create proxy server build...")
+    proxy_build = create_build(app_name=PROXY_APP_NAME, source_blob={"url":"https://github.com/addisonwurtz/jupyterhub-deploy-docker/proxy_server/archive/main.tar.gz"})
+    print("Proxy build: ") 
+    for each in proxy_build:
+        print(f"{each}: {proxy_build[each]}")
     print("Proxy server is running...") 
 
 
