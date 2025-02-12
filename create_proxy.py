@@ -37,7 +37,7 @@ def get_app_info(app_name=None, region="us"):
 def create_heroku_app(app_name=None, region="us"):
     payload = {"name": app_name, "region": region, "stack": "container"} if app_name else {"region": region}
 
-    if TEAM_NAME is None or TEAM_NAME is "":
+    if TEAM_NAME is None or TEAM_NAME == "":
         print("No team name.")
         request_url = heroku_url
     else:
