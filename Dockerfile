@@ -8,7 +8,7 @@ ARG DOCKER_NOTEBOOK_DIR
 FROM quay.io/jupyterhub/jupyterhub
 
 COPY start_hub jupyterhub_config.py create_proxy.py /srv/jupyterhub/
-COPY proxy_server/ srv/jupyterhub/proxy_server
+COPY proxy_server/ /srv/jupyterhub/proxy_server
 
 # Create non-root user
 # RUN useradd -m myuser
