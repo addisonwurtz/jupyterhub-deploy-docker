@@ -24,9 +24,6 @@ headers = {
 def get_app_info(app_name=None, region="us"):
     request_url = heroku_url + "/" + app_name
 
-    print(f"Headers: {headers}")
-    print(f"Request URL: {request_url}")
-    
     response = requests.get(url=request_url, headers=headers) 
     
     if response.status_code == 200:
