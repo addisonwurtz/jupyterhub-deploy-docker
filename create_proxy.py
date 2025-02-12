@@ -40,7 +40,7 @@ def get_app_info(app_name=None, region="us"):
 def create_heroku_app(app_name=None, region="us"):
     payload = {"name": app_name, "region": region, "stack": "container"} if app_name else {"region": region}
 
-    if TEAM_NAME is None:
+    if TEAM_NAME is None or TEAM_NAME is "":
         print("No team name.")
         request_url = heroku_url
     else:
@@ -125,6 +125,7 @@ if __name__ == "__main__":
 
     print("Saving proxy info to hub...")
     # Set config variable for proxy_url in hub app
+    # TODO may not need git url now that I am creating builds 
     set_config_vars(app_name=HUB_APP_NAME, config_vars={
         "PROXY_WEB_URL": proxy_info["web_url"],
         "PROXY_GIT_URL": proxy_info["git_url"]})
