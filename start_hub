@@ -4,7 +4,7 @@
 # terminal interface a little prettier:
 export PS1='\[\033[01;34m\]\w\[\033[00m\]\$'
 
-echo "Archiving proxy server files for blob for proxy build..."
+echo "Archiving proxy server files for proxy build blob..."
 tar -czf proxy_server_app.tar.gz proxy_server/*
 echo "Blob created"
 
