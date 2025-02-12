@@ -4,11 +4,15 @@
 # terminal interface a little prettier:
 export PS1='\[\033[01;34m\]\w\[\033[00m\]\$'
 
-echo "Creating app for proxy server"
+echo "Archiving proxy server files for blob for proxy build..."
+tar -czf proxy_server_app.tar.gz proxy_server/*
+echo "Blob created"
+
+echo "Creating app for proxy server..."
 python3 create_proxy.py
 echo "Proxy server app created"
 
 
-echo "Starting Jupyterhub"
+echo "Starting Jupyterhub..."
 jupyterhub 
 echo "Hub is running..."
