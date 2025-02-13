@@ -104,14 +104,9 @@ def create_blob_source(app_name, blob_path):
     if response.status_code == 201:
         print("Blob source url successfully created")
         source_url = response.json()["source_blob"] 
-        print(f"source_url['put_url']: {source_url['put_url']}")
         print(f"source_url['get_url']: {source_url['get_url']}")
 
         print("Uploading source blob...")
-        #tar_buffer = io.BytesIO()
-        #with tarfile.open(fileobj=tar_buffer, mode='w:gz') as tar:
-            #tar.add(blob_path)
-        #response = requests.put(url=source_url["put_url"], headers=blob_put_headers, data=tar_buffer) 
         response = requests.put(url=source_url["put_url"], headers=blob_put_headers, data=open(blob_path, 'rb')) 
 
         if response.status_code == 200:
@@ -133,7 +128,8 @@ def create_build(app_name, source_blob={"checksum": None, "url": None, "version"
     response = requests.post(url=build_request_url, headers=headers, json=source_blob)
     if response.status_code == 200:
         print(f"{app_name} build successfully created")
-        return response.json()
+        print("Response: ") 
+        print(response.text)
     else:
         print(f"Failed to create build for {app_name}: {response.status_code}, {response.text}")
 
@@ -187,9 +183,7 @@ if __name__ == "__main__":
     # Create build for proxy server app
     print("Attempting to create proxy server build...")
     proxy_build = create_build(app_name=PROXY_APP_NAME, source_blob={"url": blob_get_url})
-    print("Proxy build: ") 
-    for each in proxy_build:
-        print(f"{each}: {proxy_build[each]}")
+    
     print("Proxy server is running...") 
 
 
