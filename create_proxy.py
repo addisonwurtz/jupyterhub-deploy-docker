@@ -94,7 +94,7 @@ def get_permanent_token():
 
 def create_blob_source(app_name, blob_path):
     blob_source_request_url = heroku_url + f"/{app_name}/sources"
-    blob_request_headers = { 
+    blob_put_headers = { 
                         "Accept": "application/vnd.heroku+json; version=3",
                         "Content-Type": "--data-binary @source.tgz"
                         }
@@ -103,7 +103,6 @@ def create_blob_source(app_name, blob_path):
     if response.status_code == 201:
         print("Blob source url successfully created")
         source_url = response.json()["source_blob"] 
-        print(f"Source url json: {source_url}")
         print(f"source_url['put_url']: {source_url['put_url']}")
         print(f"source_url['get_url']: {source_url['get_url']}")
 
@@ -111,7 +110,7 @@ def create_blob_source(app_name, blob_path):
         tar_buffer = io.BytesIO()
         with tarfile.open(fileobj=tar_buffer, mode='w:gz') as tar:
             tar.add(blob_path)
-        response = requests.put(url=source_url["put_url"], headers=headers, data=tar_buffer) 
+        response = requests.put(url=source_url["put_url"], headers=blob_put_headers, data=tar_buffer) 
 
         if response.status_code == 200:
             print("Blob source successfully created")
