@@ -94,11 +94,25 @@ def create_blob_source(app_name, blob_path):
     blob_source_request_url = heroku_url + f"/{app_name}/sources"
     response = requests.post(url=blob_source_request_url, headers=headers)
 
-    if response.status_code == 200:
-        print("Blob source successfully created")
-        return response.json()
+    if response.status_code == 201:
+        print("Blob source url successfully created")
+        
+        get_url, put_url = response.json()["source_blob"] 
+        # put_url = response.json()["put_url"]
+
+        print("Uploading source blob...")
+        blob_put_headers = { "Accept": "application/vnd.heroku+json; version=3",
+                        "Content-Type": "--data-binary @source.tgz",}
+        response = requests.put(url=blob_source_request_url, headers=blob_put_headers, files=PROXY_BLOB)
+
+        if response.status_code == 200:
+            print("Blob source successfully created")
+            return response.json()
+        else:
+            print(f"Failed to create blob source: {response.status_code}, {response.text}")
+            return None
     else:
-        print(f"Failed to create blob source: {response.status_code}, {response.text}")
+        print(f"Failed to create blob source url: {response.status_code}, {response.text}")
         return None
 
 def create_build(app_name, source_blob={"checksum": None, "url": None, "version": None, "version_description": None }):
