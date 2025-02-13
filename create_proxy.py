@@ -98,8 +98,8 @@ def create_blob_source(app_name, blob_path):
         print("Blob source url successfully created")
         source_url = response.json()["source_blob"] 
         print(f"Source url json: {source_url}")
-        print(f"source_url['put_url']: {source_url["put_url"]}")
-        print(f"source_url['get_url']: {source_url["get_url"]}")
+        print(f"source_url['put_url']: {source_url['put_url']}")
+        print(f"source_url['get_url']: {source_url['get_url']}")
 
         print("Uploading source blob...")
         blob_put_headers = { "Accept": "application/vnd.heroku+json; version=3",
