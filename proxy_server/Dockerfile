@@ -30,8 +30,8 @@ USER 65534
 
 # Expose the proxy for traffic to be proxied (8000) and the
 # REST API where it can be configured (8001)
-EXPOSE 8000
-EXPOSE 8001
+#EXPOSE 8000
+#EXPOSE 8001
 
 # Put configurable-http-proxy on path for chp-docker-entrypoint
 ENV PATH=/srv/configurable-http-proxy/bin:$PATH

@@ -10,9 +10,8 @@ HEROKU_AUTH_TOKEN = os.getenv("HEROKU_AUTH_TOKEN")
 HUB_PORT = os.getenv("PORT")
 PROXY_APP_NAME = os.getenv("PROXY_NAME")
 PROXY_AUTH_TOKEN = os.getenv("PROXY_AUTH_TOKEN")
-# TODO I don't think I actually need team name... remove...
-TEAM_NAME = os.getenv("TEAM_NAME")
 PROXY_BLOB = os.getenv("PROXY_BLOB")
+TEAM_NAME = os.getenv("TEAM_NAME")
 
 heroku_url = "https://api.heroku.com/apps"
 heroku_team_url = "https://api.heroku.com/teams/apps"
@@ -40,6 +39,7 @@ def get_app_info(app_name=None, region="us"):
 def create_heroku_app(app_name=None, region="us"):
     payload = {"name": app_name, "region": region, "stack": "container"} if app_name else {"region": region}
 
+    # TODO remove team name logic
     if TEAM_NAME is None or TEAM_NAME == "":
         print("No team name.")
         request_url = heroku_url
@@ -171,6 +171,7 @@ if __name__ == "__main__":
                     "HUB_WEB_URL": hub_info["web_url"], 
                     "HUB_PORT": HUB_PORT, 
                     "APP_NAME": PROXY_APP_NAME,
+                    "PROXY_WEB_URL": proxy_info["web_url"],
                     "PROXY_AUTH_TOKEN": PROXY_AUTH_TOKEN,
                     "HEROKU_AUTH_TOKEN": HEROKU_AUTH_TOKEN
                     } 
