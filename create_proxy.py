@@ -124,7 +124,7 @@ def create_build(app_name, source_blob={"checksum": None, "url": None, "version"
     build_request_url = heroku_url + f"/{app_name}/builds"
 
     response = requests.post(url=build_request_url, headers=headers, json=source_blob)
-    if response.status_code == 200:
+    if response.status_code == 201:
         print(f"{app_name} build successfully created")
         print("Response: ") 
         print(response.text)
