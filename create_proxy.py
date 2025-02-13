@@ -1,5 +1,7 @@
 import os
 import requests
+import tarfile
+import io
 
 
 #TODO rename config vars for clarity
@@ -106,7 +108,10 @@ def create_blob_source(app_name, blob_path):
         print(f"source_url['get_url']: {source_url['get_url']}")
 
         print("Uploading source blob...")
-        response = requests.put(url=source_url["put_url"], headers=headers, files=open(blob_path, 'rb').read())
+        tar_buffer = io.BytesIO()
+        with tarfile.open(fileobj=tar_buffer, mode='w:gz') as tar:
+            tar.add(blob_path)
+        response = requests.put(url=source_url["put_url"], headers=headers, data=tar_buffer) 
 
         if response.status_code == 200:
             print("Blob source successfully created")
@@ -117,6 +122,7 @@ def create_blob_source(app_name, blob_path):
     else:
         print(f"Failed to create blob source url: {response.status_code}, {response.text}")
         return None
+
 
 def create_build(app_name, source_blob={"checksum": None, "url": None, "version": None, "version_description": None }):
     build_request_url = heroku_url + f"/{app_name}/builds"
