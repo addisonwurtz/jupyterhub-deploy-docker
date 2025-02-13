@@ -92,7 +92,7 @@ def get_permanent_token():
 
 def create_blob_source(app_name, blob_path):
     blob_source_request_url = heroku_url + f"{app_name}/sources"
-    response = requests.post(headers=headers)
+    response = requests.post(url=blob_source_request_url, headers=headers)
 
     if response.status_code == 200:
         print("Blob source successfully created")
