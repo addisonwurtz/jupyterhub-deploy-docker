@@ -96,7 +96,8 @@ def create_blob_source(app_name, blob_path):
     blob_source_request_url = heroku_url + f"/{app_name}/sources"
     blob_put_headers = { 
                         "Accept": "application/vnd.heroku+json; version=3",
-                        "Content-Type": "--data-binary @source.tgz"
+                        "Content-Type": "application/gzip"
+                        # "Content-Type": "--data-binary @source.tgz"
                         }
     response = requests.post(url=blob_source_request_url, headers=headers)
 
