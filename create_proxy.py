@@ -111,8 +111,6 @@ def create_blob_source(app_name, blob_path):
 
         if response.status_code == 200:
             print("Blob source successfully created")
-            print("Response: ")
-            print(response.content)
             return source_url["get_url"] 
         else:
             print(f"Failed to create blob source: {response.status_code}, {response.text}")
@@ -183,7 +181,7 @@ if __name__ == "__main__":
      
     # Create build for proxy server app
     print("Attempting to create proxy server build...")
-    proxy_build = create_build(app_name=PROXY_APP_NAME, source_blob={"url": blob_get_url})
+    proxy_build = create_build(app_name=PROXY_APP_NAME, source_blob={"source_blob": {"url": blob_get_url}})
     
     print("Proxy server is running...") 
 
