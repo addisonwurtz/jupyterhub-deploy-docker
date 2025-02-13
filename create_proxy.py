@@ -106,7 +106,7 @@ def create_blob_source(app_name, blob_path):
         print(f"source_url['get_url']: {source_url['get_url']}")
 
         print("Uploading source blob...")
-        response = requests.put(url=source_url["put_url"], headers=headers, files=open(blob_path, 'rb'))
+        response = requests.put(url=source_url["put_url"], headers=headers, files=open(blob_path, 'rb').read())
 
         if response.status_code == 200:
             print("Blob source successfully created")
