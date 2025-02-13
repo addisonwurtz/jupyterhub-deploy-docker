@@ -116,7 +116,9 @@ def create_blob_source(app_name, blob_path):
 
         if response.status_code == 200:
             print("Blob source successfully created")
-            return response.json()
+            print("Response: ")
+            print(response.content)
+            return source_url["get_url"] 
         else:
             print(f"Failed to create blob source: {response.status_code}, {response.text}")
             return None
