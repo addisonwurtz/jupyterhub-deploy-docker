@@ -182,13 +182,11 @@ if __name__ == "__main__":
 
     # Push proxy app blob to heroku source url
     print("Creating source for proxy app blob...")
-    blob_info = create_blob_source(app_name=PROXY_APP_NAME, blob_path=PROXY_BLOB)
-    for each in blob_info:
-        print(f"{each}: {blob_info[each]}")
-    
+    blob_get_url = create_blob_source(app_name=PROXY_APP_NAME, blob_path=PROXY_BLOB)
+     
     # Create build for proxy server app
     print("Attempting to create proxy server build...")
-    proxy_build = create_build(app_name=PROXY_APP_NAME, source_blob={"url":"https://github.com/addisonwurtz/jupyterhub-deploy-docker/proxy_server/archive/main.tar.gz"})
+    proxy_build = create_build(app_name=PROXY_APP_NAME, source_blob={"url": blob_get_url})
     print("Proxy build: ") 
     for each in proxy_build:
         print(f"{each}: {proxy_build[each]}")
