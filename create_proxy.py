@@ -108,10 +108,11 @@ def create_blob_source(app_name, blob_path):
         print(f"source_url['get_url']: {source_url['get_url']}")
 
         print("Uploading source blob...")
-        tar_buffer = io.BytesIO()
-        with tarfile.open(fileobj=tar_buffer, mode='w:gz') as tar:
-            tar.add(blob_path)
-        response = requests.put(url=source_url["put_url"], headers=blob_put_headers, data=tar_buffer) 
+        #tar_buffer = io.BytesIO()
+        #with tarfile.open(fileobj=tar_buffer, mode='w:gz') as tar:
+            #tar.add(blob_path)
+        #response = requests.put(url=source_url["put_url"], headers=blob_put_headers, data=tar_buffer) 
+        response = requests.put(url=source_url["put_url"], headers=blob_put_headers, data=open(blob_path, 'rb')) 
 
         if response.status_code == 200:
             print("Blob source successfully created")
