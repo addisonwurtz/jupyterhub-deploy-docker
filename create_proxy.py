@@ -104,7 +104,7 @@ def create_blob_source(app_name, blob_path):
         print("Uploading source blob...")
         blob_put_headers = { "Accept": "application/vnd.heroku+json; version=3",
                         "Content-Type": "--data-binary @source.tgz",}
-        response = requests.put(url=source_url["put_url"], headers=blob_put_headers, files=open(blob_path))
+        response = requests.put(url=source_url["put_url"], headers=blob_put_headers, files=open(blob_path, 'rb'))
 
         if response.status_code == 200:
             print("Blob source successfully created")
