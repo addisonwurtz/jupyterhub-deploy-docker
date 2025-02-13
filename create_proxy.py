@@ -10,6 +10,7 @@ PROXY_APP_NAME = os.getenv("PROXY_NAME")
 PROXY_AUTH_TOKEN = os.getenv("PROXY_AUTH_TOKEN")
 # TODO I don't think I actually need team name... remove...
 TEAM_NAME = os.getenv("TEAM_NAME")
+PROXY_BLOB = os.getenv("PROXY_BLOB")
 
 heroku_url = "https://api.heroku.com/apps"
 heroku_team_url = "https://api.heroku.com/teams/apps"
@@ -89,6 +90,17 @@ def get_permanent_token():
         return None
 
 
+def create_blob_source(app_name, blob_path):
+    blob_source_request_url = heroku_url + f"{app_name}/sources"
+    response = requests.post(headers=headers)
+
+    if response.status_code == 200:
+        print("Blob source successfully created")
+        return response.json()
+    else:
+        print(f"Failed to create blob source: {response.status_code}, {response.text}")
+        return None
+
 def create_build(app_name, source_blob={"checksum": None, "url": None, "version": None, "version_description": None }):
     build_request_url = heroku_url + f"/{app_name}/builds"
 
@@ -142,6 +154,12 @@ if __name__ == "__main__":
                     } 
     set_config_vars(app_name=PROXY_APP_NAME, config_vars=proxy_config_vars)
 
+    # Push proxy app blob to heroku source url
+    print("Creating source for proxy app blob...")
+    blob_info = create_blob_source(app_name=PROXY_APP_NAME, blob_path=PROXY_BLOB)
+    for each in blob_info:
+        print(f"{each}: {blob_info[each]}")
+    
     # Create build for proxy server app
     print("Attempting to create proxy server build...")
     proxy_build = create_build(app_name=PROXY_APP_NAME, source_blob={"url":"https://github.com/addisonwurtz/jupyterhub-deploy-docker/proxy_server/archive/main.tar.gz"})
