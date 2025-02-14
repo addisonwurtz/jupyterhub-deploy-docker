@@ -17,16 +17,6 @@ setup:
 build:
   docker:
     web: Dockerfile
-  #config:
-    # This username will be a JupyterHub admin
-    # JUPYTERHUB_ADMIN: admin
-    # All containers will join this network
-    # DOCKER_NETWORK_NAME: jupyterhub-network
-    # JupyterHub will spawn this Notebook image for users
-    # DOCKER_NOTEBOOK_IMAGE: quay.io/jupyter/base-notebook:latest
-    # Notebook directory inside user image
-    # DOCKER_NOTEBOOK_DIR: /home/jovyan/work
-
 
 run:
   web: ./start_hub 
