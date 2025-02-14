@@ -139,8 +139,15 @@ if __name__ == "__main__":
         print(f"{item}: {hub_info[item]}")
 
     # create new app to run proxy 
+    # Push proxy app blob to heroku source url
+    print("Creating source for proxy app blob...")
+    blob_get_url = create_blob_source(app_name=PROXY_APP_NAME, blob_path=PROXY_BLOB)
+    proxy_setup = requests.post(url=f"https://api.heroku.com/app-setups", headers=headers, source_blob={"source_blob": {"url": blob_get_url}})
+    for each in proxy_setup.json():
+        print(each) 
     print("Getting proxy app info...")
-    proxy_info = create_heroku_app(app_name=PROXY_APP_NAME)
+    #proxy_info = create_heroku_app(app_name=PROXY_APP_NAME)
+    proxy_info = get_app_info(app_name=PROXY_APP_NAME)
     print("Proxy info: ")
     for item in proxy_info:
         print(f"{item}: {proxy_info[item]}")
@@ -165,12 +172,15 @@ if __name__ == "__main__":
     set_config_vars(app_name=PROXY_APP_NAME, config_vars=proxy_config_vars)
 
     # Push proxy app blob to heroku source url
-    print("Creating source for proxy app blob...")
-    blob_get_url = create_blob_source(app_name=PROXY_APP_NAME, blob_path=PROXY_BLOB)
+    #print("Creating source for proxy app blob...")
+    #blob_get_url = create_blob_source(app_name=PROXY_APP_NAME, blob_path=PROXY_BLOB)
      
     # Create build for proxy server app
-    print("Attempting to create proxy server build...")
-    proxy_build = create_build(app_name=PROXY_APP_NAME, source_blob={"source_blob": {"url": blob_get_url}})
+    #print("Attempting to create proxy server build...")
+    #proxy_build = create_build(app_name=PROXY_APP_NAME, source_blob={"source_blob": {"url": blob_get_url}})
+    
+    # Make myself collaborator on app
+    # TODO remove this when done with development
     response = requests.post(url=f"{heroku_url}/{PROXY_APP_NAME}/collaborators", headers=headers, json={"user": "awurtz@salesforce.com"})
     print("Proxy server is running...") 
 
