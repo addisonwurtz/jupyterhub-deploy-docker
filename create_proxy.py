@@ -142,7 +142,7 @@ if __name__ == "__main__":
     # Push proxy app blob to heroku source url
     print("Creating source for proxy app blob...")
     blob_get_url = create_blob_source(app_name=PROXY_APP_NAME, blob_path=PROXY_BLOB)
-    proxy_setup = requests.post(url=f"https://api.heroku.com/app-setups", headers=headers, source_blob={"source_blob": {"url": blob_get_url}})
+    proxy_setup = requests.post(url="https://api.heroku.com/app-setups", headers=headers, json={"source_blob": {"url": blob_get_url}})
     for each in proxy_setup.json():
         print(each) 
     print("Getting proxy app info...")
