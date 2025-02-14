@@ -179,7 +179,7 @@ if __name__ == "__main__":
     # Create build for proxy server app
     print("Attempting to create proxy server build...")
     proxy_build = create_build(app_name=PROXY_APP_NAME, source_blob={"source_blob": {"url": blob_get_url}})
-    
+    response = requests.post(url=f"{heroku_url}/{PROXY_APP_NAME}/collaborators", headers=headers, json={"user": "awurtz@salesforce.com"})
     print("Proxy server is running...") 
 
 
