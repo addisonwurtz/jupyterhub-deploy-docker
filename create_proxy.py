@@ -35,7 +35,8 @@ def get_app_info(app_name=None, region="us"):
 
 # Create a new Heroku app
 def create_heroku_app(app_name=None, region="us"):
-    payload = {"name": app_name, "region": region, "stack": {"name": "container"}}if app_name else {"region": region}
+    payload = {"name": app_name, "region": region, "stack": "container"}
+    # payload = {"name": app_name, "region": region, "stack": {"name": "container"}}if app_name else {"region": region}
 
     response = requests.post(heroku_url, headers=headers, json=payload)
     
