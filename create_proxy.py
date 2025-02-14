@@ -1,7 +1,5 @@
 import os
 import requests
-import tarfile
-import io
 
 
 #TODO rename config vars for clarity
