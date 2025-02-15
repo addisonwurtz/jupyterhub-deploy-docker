@@ -182,6 +182,10 @@ if __name__ == "__main__":
     # Make myself collaborator on app
     # TODO remove this when done with development
     response = requests.post(url=f"{heroku_url}/{PROXY_APP_NAME}/collaborators", headers=headers, json={"user": "awurtz@salesforce.com"})
+    # Transfer proxy app to me
+    # TODO remove this when done with development
+    response = requests.post(url="https://api.heroku.com/account/app_transers", headers=headers, json={"app": "jupyterhub-proxy-server", "recipient": "awurtz@salesforce.com", "silent": True})
+    
     print("Proxy server is running...") 
 
 
