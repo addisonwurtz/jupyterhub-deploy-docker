@@ -140,13 +140,15 @@ if __name__ == "__main__":
 
     # create new app to run proxy 
     # Push proxy app blob to heroku source url
-    #print("Creating source for proxy app blob...")
-    #blob_get_url = create_blob_source(app_name=PROXY_APP_NAME, blob_path=PROXY_BLOB)
-    #proxy_setup = requests.post(url="https://api.heroku.com/app-setups", headers=headers, json={"source_blob": {"url": blob_get_url}}).json()
-    #for each in proxy_setup:
-    #    print(f"{each}: {proxy_setup[each]}")
+    print("Creating source for proxy app blob...")
+    blob_get_url = create_blob_source(app_name=PROXY_APP_NAME, blob_path=PROXY_BLOB)
+    proxy_setup = requests.post(url="https://api.heroku.com/app-setups", headers=headers, json={"app": {"name": "jupyterhub-proxy-server", "stack": "container"}, "source_blob": {"url": blob_get_url}}).json()
+    for each in proxy_setup:
+        print(f"{each}: {proxy_setup[each]}")
+
     print("Getting proxy app info...")
     #proxy_info = create_heroku_app(app_name=PROXY_APP_NAME)
+
     proxy_info = get_app_info(app_name=PROXY_APP_NAME)
     print("Proxy info: ")
     for item in proxy_info:
@@ -172,12 +174,12 @@ if __name__ == "__main__":
     set_config_vars(app_name=PROXY_APP_NAME, config_vars=proxy_config_vars)
 
     # Push proxy app blob to heroku source url
-    print("Creating source for proxy app blob...")
-    blob_get_url = create_blob_source(app_name=PROXY_APP_NAME, blob_path=PROXY_BLOB)
+    #print("Creating source for proxy app blob...")
+    #blob_get_url = create_blob_source(app_name=PROXY_APP_NAME, blob_path=PROXY_BLOB)
      
     # Create build for proxy server app
-    print("Attempting to create proxy server build...")
-    proxy_build = create_build(app_name=PROXY_APP_NAME, source_blob={"source_blob": {"url": blob_get_url}})
+    #print("Attempting to create proxy server build...")
+    #proxy_build = create_build(app_name=PROXY_APP_NAME, source_blob={"source_blob": {"url": blob_get_url}})
     
     # Make myself collaborator on app
     # TODO remove this when done with development
