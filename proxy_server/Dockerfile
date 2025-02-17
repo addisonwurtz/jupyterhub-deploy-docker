@@ -35,4 +35,5 @@ USER 65534
 
 # Put configurable-http-proxy on path for chp-docker-entrypoint
 ENV PATH=/srv/configurable-http-proxy/bin:$PATH
-ENTRYPOINT ["/srv/configurable-http-proxy/chp-docker-entrypoint"]
+ENTRYPOINT ["/srv/configurable-http-proxy/start_proxy"]
+#ENTRYPOINT ["/srv/configurable-http-proxy/chp-docker-entrypoint"]
