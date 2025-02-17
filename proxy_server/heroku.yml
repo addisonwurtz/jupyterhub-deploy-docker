@@ -13,5 +13,5 @@ build:
     web: Dockerfile
 
 run:
-  web: ./start_proxy
+  web: ./srv/configurable-http-proxy/start_proxy
   # web:  configurable-http-proxy --ip=$PROXY_WEB_URL --port=$PORT --api-ip=$PROXY_WEB_URL --api-port=$HUB_PORT --default-target=${HUB_WEB_URL}:${HUB_PORT} --error-target=${HUB_WEB_URL}:${HUB_PORT}/hub/error
