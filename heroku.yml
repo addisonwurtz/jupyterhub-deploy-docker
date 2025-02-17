@@ -12,7 +12,7 @@ setup:
     # Notebook directory inside user image
     DOCKER_NOTEBOOK_DIR: /home/jovyan/work
     # Proxy API URL (needs to be generated when proxy app is created)
-    PROXY_API_URL: ""
+    #PROXY_API_URL: ""
 
 build:
   docker:

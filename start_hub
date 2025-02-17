@@ -15,5 +15,5 @@ echo "Proxy server app created"
 
 
 echo "Starting Jupyterhub..."
-jupyterhub 
+jupyterhub --ConfigurableHTTPProxy.api_url="${PROXY_WEB_URL}"
 echo "Hub is running..."
