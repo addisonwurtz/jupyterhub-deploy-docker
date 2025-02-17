@@ -115,4 +115,4 @@ if __name__ == "__main__":
 
     # Set PROXY_PORT config var in hub app
     print("Setting PROXY_PORT config variable in jupyterhub app...")
-    set_config_vars(app_name=HUB_APP_NAME, config_vars={"PORT": PROXY_PORT})
+    set_config_vars(app_name=HUB_APP_NAME, config_vars={"PROXY_PORT": PROXY_PORT})
