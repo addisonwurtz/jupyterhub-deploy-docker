@@ -5,7 +5,7 @@ echo $PORT
 #curl -n -X PATCH https://api.heroku.com/apps/$APP_NAME/config-vars \
 curl -H "Authorization: Bearer ${HEROKU_AUTH_TOKEN}" \
   -X PATCH https://api.heroku.com/apps/$APP_NAME/config-vars \
-  -d "{'PROXY_PORT': $PORT}" \
+  -d "{\"PROXY_PORT\": \"$PORT\"}" \
   -H "Content-Type: application/json" \
   -H "Accept: application/vnd.heroku+json; version=3"
 
