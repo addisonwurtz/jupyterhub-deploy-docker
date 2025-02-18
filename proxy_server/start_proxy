@@ -1,9 +1,8 @@
 #!/usr/bin/env sh 
 
 echo "Sending PROXY_PORT to jupyterhub app..."
-echo $PORT
-#curl -n -X PATCH https://api.heroku.com/apps/$APP_NAME/config-vars \
-curl -H "Authorization: Bearer ${HEROKU_AUTH_TOKEN}" \
+# TODO is this secure? Silent option suppresses logs, but response contains auth keys
+curl --silent -H "Authorization: Bearer ${HEROKU_AUTH_TOKEN}" \
   -X PATCH https://api.heroku.com/apps/$APP_NAME/config-vars \
   -d "{\"PROXY_PORT\": \"$PORT\"}" \
   -H "Content-Type: application/json" \
