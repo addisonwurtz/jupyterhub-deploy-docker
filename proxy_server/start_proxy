@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh 
 
 echo "Sending PORT to jupyterhub app..."
 python3 setup.py
