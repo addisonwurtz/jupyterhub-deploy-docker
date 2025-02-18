@@ -9,5 +9,5 @@ curl --silent -H "Authorization: Bearer ${HEROKU_AUTH_TOKEN}" \
   -H "Accept: application/vnd.heroku+json; version=3"
 
 echo "Starting proxy server..."
-configurable-http-proxy --ip=$PROXY_WEB_URL --port=$PORT --api-ip=$PROXY_WEB_URL --api-port=$PORT --default-target=${HUB_WEB_URL}:${HUB_PORT} --error-target=${HUB_WEB_URL}:${HUB_PORT}/hub/error
+# configurable-http-proxy --ip=$PROXY_WEB_URL --port=$PORT --api-ip=$PROXY_WEB_URL --api-port=$PORT --default-target=${HUB_WEB_URL}:${HUB_PORT} --error-target=${HUB_WEB_URL}:${HUB_PORT}/hub/error
 echo "Proxy server running..."
