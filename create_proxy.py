@@ -165,6 +165,7 @@ if __name__ == "__main__":
     # set config variables to hub address
     print("Saving app info to proxy app...")
     proxy_config_vars = {
+                    "HUB_APP_NAME": HUB_APP_NAME,
                     "HUB_WEB_URL": hub_info["web_url"], 
                     "HUB_PORT": HUB_PORT, 
                     "APP_NAME": PROXY_APP_NAME,

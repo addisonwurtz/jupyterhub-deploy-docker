@@ -3,7 +3,7 @@
 echo "Sending PROXY_PORT to jupyterhub app..."
 # TODO is this secure? Silent option suppresses logs, but response contains auth keys
 curl --silent -H "Authorization: Bearer ${HEROKU_AUTH_TOKEN}" \
-  -X PATCH https://api.heroku.com/apps/$APP_NAME/config-vars \
+  -X PATCH https://api.heroku.com/apps/$HUB_APP_NAME/config-vars \
   -d "{\"PROXY_PORT\": \"$PORT\"}" \
   -H "Content-Type: application/json" \
   -H "Accept: application/vnd.heroku+json; version=3"
