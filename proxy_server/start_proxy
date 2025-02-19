@@ -1,13 +1,12 @@
 #!/usr/bin/env sh 
 
-echo "Sending PROXY_PORT to jupyterhub app..."
+#echo "Sending PROXY_PORT to jupyterhub app..."
 # TODO is this secure? Silent option suppresses logs, but response contains auth keys
-curl --silent -H "Authorization: Bearer ${HEROKU_AUTH_TOKEN}" \
-  -X PATCH https://api.heroku.com/apps/$HUB_APP_NAME/config-vars \
-  -d "{\"PROXY_PORT\": \"$PORT\"}" \
-  -H "Content-Type: application/json" \
-  -H "Accept: application/vnd.heroku+json; version=3"
-
+#curl --silent -H "Authorization: Bearer ${HEROKU_AUTH_TOKEN}" \
+#  -X PATCH https://api.heroku.com/apps/$HUB_APP_NAME/config-vars \
+#  -d "{\"PROXY_PORT\": \"$PORT\"}" \
+#  -H "Content-Type: application/json" \
+#  -H "Accept: application/vnd.heroku+json; version=3"
 
 echo "Infinite loop for debugging..."
 while [ 1 ]
@@ -17,5 +16,5 @@ do
 done 
 
 echo "Starting proxy server..."
-# configurable-http-proxy --ip=$PROXY_WEB_URL --port=$PORT --api-ip=$PROXY_WEB_URL --api-port=$PORT --default-target=${HUB_WEB_URL}:${HUB_PORT} --error-target=${HUB_WEB_URL}:${HUB_PORT}/hub/error
+configurable-http-proxy --ip=$PROXY_WEB_URL --port=$PORT --api-ip=$PROXY_WEB_URL --api-port=$PORT --default-target=${HUB_WEB_URL}:${HUB_PORT} --error-target=${HUB_WEB_URL}:${HUB_PORT}/hub/error
 echo "Proxy server running..."
