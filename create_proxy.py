@@ -70,6 +70,7 @@ def get_addon_info(app_name, addon_name):
 
     if response.status_code == 200:
         print("ADD-ON attach response:")
+        print(response)
         print(response.content)
         return response.json()
     elif response.status_code == 404 and response.text == '{"resource":"addon","id":"not_found","message":"Couldn\'t find that add-on."}':
