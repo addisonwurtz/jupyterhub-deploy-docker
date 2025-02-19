@@ -176,24 +176,24 @@ def create_build(app_name, source_blob={"checksum": None, "url": None, "version"
 if __name__ == "__main__":
 
     # query for current (hub) app url
-    print("Getting hub app info...")
+    print("\n\nGetting hub app info...")
     hub_info = get_app_info(app_name=HUB_APP_NAME)
-    print("HUB INFO: ")
+    print("\n\nHUB INFO: ")
     for item in hub_info:
         print(f"{item}: {hub_info[item]}")
 
-    print("Getting proxy app info...")
+    print("\n\nGetting proxy app info...")
     proxy_info = create_heroku_app(app_name=PROXY_APP_NAME)
 
     # proxy_info = get_app_info(app_name=PROXY_APP_NAME)
-    print("PROXY INFO: ")
+    print("\n\nPROXY INFO: ")
     for item in proxy_info:
         print(f"{item}: {proxy_info[item]}")
     
     # Check if proxy has prostgres add-on and attach if not
-    print("Checking for Proxy App database add-on...")
+    print("\n\nChecking for Proxy App database add-on...")
     database_info = get_addon_info(PROXY_APP_NAME, DATABASE_GLOBAL_NAME) 
-    if database_info is False:
+    if database_info is None:
         print("Database add-on not found for Proxy App")
         print(f"Attaching {DATABASE_GLOBAL_NAME} to {PROXY_APP_NAME}")
         database_info = attach_addon(PROXY_APP_NAME, DATABASE_GLOBAL_NAME, confirm=HUB_APP_NAME)
