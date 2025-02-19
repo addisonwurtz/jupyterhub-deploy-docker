@@ -12,5 +12,5 @@ build:
   docker:
     web: Dockerfile
 
-#run:
-#  web: ./start_proxy
+run:
+  web: ./start_proxy

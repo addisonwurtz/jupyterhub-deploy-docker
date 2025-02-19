@@ -52,16 +52,16 @@ def create_heroku_app(app_name=None, region="us"):
         print(f"Failed to create app: {response.status_code}, {response.text}")
         return None
 
-
+"""
 # Returns True if specified add-on is attached to specified app
 def is_postgres_addon_attached(app_name, addon_name):
     response = get_addon_info(app_name, addon_name)
 
-    if response["addon_service"]["name"] == addon_name:
-        return True
-    else:
+    if response is None:
         return False
-
+    elif response["addon_service"]["name"] == addon_name:
+        return True
+"""
 
 # Returns addon info for given app and add-on
 def get_addon_info(app_name, addon_name):
@@ -70,8 +70,12 @@ def get_addon_info(app_name, addon_name):
 
     if response.status_code == 200:
         return response.json()
+    elif response.status_code == 404 and response.text == '{"resource":"addon","id":"not_found","message":"Couldn\'t find that add-on."}':
+        print(f"{addon_name} add-on is not currently attached to {app_name} app.")
+        return None 
     else:
         print(f"Failed to get add on info for {app_name} app: {response.status_code}, {response.text}")
+        return None
 
 
 # Attaches existing add-on to specfied app 
@@ -92,9 +96,11 @@ def attach_addon(app_name, addon_name, confirm=None):
 
     if response.status_code == 200:
         print(f"Add-on {addon_name} was successfully attatched to {app_name}.")
+        return response.json()
     else:
         print(f"Failed to attach {addon_name} add=on to {app_name} app: ")
         print(f"{response.status_code}, {response.text}")
+        return None
 
 
 # Sets Heroku config variable for specified app 
@@ -169,14 +175,6 @@ def create_build(app_name, source_blob={"checksum": None, "url": None, "version"
 
 if __name__ == "__main__":
 
-    # TODO helpful error for expired tokens
-    # Check for permanent token and create if necessary
-    #if HEROKU_PERMANENT_TOKEN is None:
-    #token_info = get_permanent_token()
-    #    print(token_info)
-    #    print(token_info["token"])
-    #    set_config_vars(app_name=HUB_APP_NAME, config_vars={"HEROKU_PERMANENT_TOKEN": token_info["token"]})
-
     # query for current (hub) app url
     print("Getting hub app info...")
     hub_info = get_app_info(app_name=HUB_APP_NAME)
@@ -193,8 +191,9 @@ if __name__ == "__main__":
         print(f"{item}: {proxy_info[item]}")
     
     # Check if proxy has prostgres add-on and attach if not
-    if is_postgres_addon_attached(PROXY_APP_NAME, DATABASE_GLOBAL_NAME) is False:
-        attach_addon(PROXY_APP_NAME, DATABASE_GLOBAL_NAME, confirm=HUB_APP_NAME)
+    database_info = get_addon_info(PROXY_APP_NAME, DATABASE_GLOBAL_NAME) 
+    if database_info is False:
+        database_info = attach_addon(PROXY_APP_NAME, DATABASE_GLOBAL_NAME, confirm=HUB_APP_NAME)
 
     # Set config variable for proxy_url in hub app
     print("Saving proxy info to hub...")
