@@ -9,7 +9,8 @@ HUB_PORT = os.getenv("PORT")
 PROXY_APP_NAME = os.getenv("PROXY_NAME")
 PROXY_AUTH_TOKEN = os.getenv("PROXY_AUTH_TOKEN")
 PROXY_BLOB = os.getenv("PROXY_BLOB")
-TEAM_NAME = os.getenv("TEAM_NAME")
+DATABASE_URL = os.getenv("DATABASE_URL")
+# TEAM_NAME = os.getenv("TEAM_NAME")
 
 heroku_url = "https://api.heroku.com/apps"
 heroku_team_url = "https://api.heroku.com/teams/apps"
@@ -171,7 +172,8 @@ if __name__ == "__main__":
                     "APP_NAME": PROXY_APP_NAME,
                     "PROXY_WEB_URL": proxy_info["web_url"],
                     "PROXY_AUTH_TOKEN": PROXY_AUTH_TOKEN,
-                    "HEROKU_AUTH_TOKEN": HEROKU_AUTH_TOKEN
+                    "HEROKU_AUTH_TOKEN": HEROKU_AUTH_TOKEN,
+                    "DATABASE_URL": DATABASE_URL
                     } 
     set_config_vars(app_name=PROXY_APP_NAME, config_vars=proxy_config_vars)
 
