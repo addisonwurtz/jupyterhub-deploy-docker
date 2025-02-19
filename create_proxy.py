@@ -69,6 +69,8 @@ def get_addon_info(app_name, addon_name):
     response = requests.get(url=request_url, headers=headers)
 
     if response.status_code == 200:
+        print("ADD-ON attach response:")
+        print(response.content)
         return response.json()
     elif response.status_code == 404 and response.text == '{"resource":"addon","id":"not_found","message":"Couldn\'t find that add-on."}':
         print(f"{addon_name} add-on is not currently attached to {app_name} app.")
@@ -199,6 +201,8 @@ if __name__ == "__main__":
         database_info = attach_addon(PROXY_APP_NAME, DATABASE_GLOBAL_NAME, confirm=HUB_APP_NAME)
     else:
         print(f"{PROXY_APP_NAME} already has {DATABASE_GLOBAL_NAME} add-on attached.")
+        print("ADD-ON ATTACH RESPONSE:")
+        print(database_info)
     print("DATABASE ADD-ON INFO:")
     for each in database_info:
         print(f"{each}: {database_info[each]}")
