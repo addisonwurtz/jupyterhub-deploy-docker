@@ -10,10 +10,11 @@ PROXY_APP_NAME = os.getenv("PROXY_NAME")
 PROXY_AUTH_TOKEN = os.getenv("PROXY_AUTH_TOKEN")
 PROXY_BLOB = os.getenv("PROXY_BLOB")
 DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_GLOBAL_NAME = os.getenv("DATABASE_GLOBAL_NAME")
 # TEAM_NAME = os.getenv("TEAM_NAME")
 
 heroku_url = "https://api.heroku.com/apps"
-heroku_team_url = "https://api.heroku.com/teams/apps"
+# heroku_team_url = "https://api.heroku.com/teams/apps"
 
 headers = {
     "Authorization": f"Bearer {HEROKU_AUTH_TOKEN}",
@@ -22,9 +23,8 @@ headers = {
 }
 
 # Get app info using Heroku API
-def get_app_info(app_name=None, region="us"):
-    request_url = heroku_url + "/" + app_name
-
+def get_app_info(app_name):
+    request_url = f"{heroku_url}/{app_name}"
     response = requests.get(url=request_url, headers=headers) 
     
     if response.status_code == 200:
@@ -36,9 +36,10 @@ def get_app_info(app_name=None, region="us"):
 
 # Create a new Heroku app
 def create_heroku_app(app_name=None, region="us"):
-    payload = {"name": app_name, "region": region, "stack": "container"}
-
-    response = requests.post(heroku_url, headers=headers, json=payload)
+    response = requests.post(heroku_url, headers=headers, json={
+        "name": app_name, 
+        "region": region, 
+        "stack": "container"})
     
     if response.status_code == 201:
         print("App created successfully!")
@@ -52,8 +53,53 @@ def create_heroku_app(app_name=None, region="us"):
         return None
 
 
+# Returns True if specified add-on is attached to specified app
+def is_postgres_addon_attached(app_name, addon_name):
+    response = get_addon_info(app_name, addon_name)
+
+    if response["addon_service"]["name"] == addon_name:
+        return True
+    else:
+        return False
+
+
+# Returns addon info for given app and add-on
+def get_addon_info(app_name, addon_name):
+    request_url = f"{heroku_url}/{app_name}/addons/{addon_name}"
+    response = requests.get(url=request_url, headers=headers)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to get add on info for {app_name} app: {response.status_code}, {response.text}")
+
+
+# Attaches existing add-on to specfied app 
+# Optional `confirm` arg: unqiue name of owning app for confirmation
+# Using the platform api "Add-on Attachemnt Create" endpoint (Stability: prototype)
+# https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create
+def attach_addon(app_name, addon_name, confirm=None):
+    request_url = "https://api.heroku.com/addon-attachments"
+    data = {
+            "addon": addon_name,
+            "app": app_name,
+            # TODO make name a variable
+            "name": "DATABASE",
+            } 
+    if confirm is not None: 
+        data["confirm"] = confirm
+    response = requests.post(url=request_url, headers=headers, json=data)
+
+    if response.status_code == 200:
+        print(f"Add-on {addon_name} was successfully attatched to {app_name}.")
+    else:
+        print(f"Failed to attach {addon_name} add=on to {app_name} app: ")
+        print(f"{response.status_code}, {response.text}")
+
+
+# Sets Heroku config variable for specified app 
 def set_config_vars(app_name, config_vars:dict):
-    request_url = heroku_url + "/" + app_name + "/config-vars"
+    request_url = f"{heroku_url}/{app_name}/config-vars"
     response = requests.patch(url=request_url, headers=headers, json=config_vars)
 
     if response.status_code == 200:
@@ -62,7 +108,7 @@ def set_config_vars(app_name, config_vars:dict):
         print(f"Failed to update config vars: {response.status_code}, {response.text}")
         return None
 
-
+"""
 def get_permanent_token():
     token_request_url = "https://api.heroku.com/oauth/authorizations"
     token_request_headers = {
@@ -80,7 +126,7 @@ def get_permanent_token():
     else:
         print(f"Failed to create auth token: {response.status_code}, {response.text}")
         return None
-
+"""
 
 def create_blob_source(app_name, blob_path):
     blob_source_request_url = heroku_url + f"/{app_name}/sources"
@@ -145,15 +191,16 @@ if __name__ == "__main__":
     print("Proxy info: ")
     for item in proxy_info:
         print(f"{item}: {proxy_info[item]}")
+    
+    # Check if proxy has prostgres add-on and attach if not
+    if is_postgres_addon_attached(PROXY_APP_NAME, DATABASE_GLOBAL_NAME) is False:
+        attach_addon(PROXY_APP_NAME, DATABASE_GLOBAL_NAME, confirm=HUB_APP_NAME)
 
-    print("Saving proxy info to hub...")
     # Set config variable for proxy_url in hub app
-    # TODO may not need git url now that I am creating builds 
-    set_config_vars(app_name=HUB_APP_NAME, config_vars={
-        "PROXY_WEB_URL": proxy_info["web_url"],
-        "PROXY_GIT_URL": proxy_info["git_url"]})
+    print("Saving proxy info to hub...")
+    set_config_vars(app_name=HUB_APP_NAME, config_vars={"PROXY_WEB_URL": proxy_info["web_url"]})
 
-    # set config variables to hub address
+    # Set config variables to hub address
     print("Saving app info to proxy app...")
     proxy_config_vars = {
                     "HUB_APP_NAME": HUB_APP_NAME,
@@ -163,7 +210,8 @@ if __name__ == "__main__":
                     "PROXY_WEB_URL": proxy_info["web_url"],
                     "PROXY_AUTH_TOKEN": PROXY_AUTH_TOKEN,
                     "HEROKU_AUTH_TOKEN": HEROKU_AUTH_TOKEN,
-                    "DATABASE_URL": DATABASE_URL
+                    "DATABASE_URL": DATABASE_URL,
+                    "DATABASE_GLOBAL_NAME": DATABASE_GLOBAL_NAME
                     } 
     set_config_vars(app_name=PROXY_APP_NAME, config_vars=proxy_config_vars)
 
