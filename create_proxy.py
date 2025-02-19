@@ -178,7 +178,7 @@ if __name__ == "__main__":
     # query for current (hub) app url
     print("Getting hub app info...")
     hub_info = get_app_info(app_name=HUB_APP_NAME)
-    print("Hub info: ")
+    print("HUB INFO: ")
     for item in hub_info:
         print(f"{item}: {hub_info[item]}")
 
@@ -186,14 +186,22 @@ if __name__ == "__main__":
     proxy_info = create_heroku_app(app_name=PROXY_APP_NAME)
 
     # proxy_info = get_app_info(app_name=PROXY_APP_NAME)
-    print("Proxy info: ")
+    print("PROXY INFO: ")
     for item in proxy_info:
         print(f"{item}: {proxy_info[item]}")
     
     # Check if proxy has prostgres add-on and attach if not
+    print("Checking for Proxy App database add-on...")
     database_info = get_addon_info(PROXY_APP_NAME, DATABASE_GLOBAL_NAME) 
     if database_info is False:
+        print("Database add-on not found for Proxy App")
+        print(f"Attaching {DATABASE_GLOBAL_NAME} to {PROXY_APP_NAME}")
         database_info = attach_addon(PROXY_APP_NAME, DATABASE_GLOBAL_NAME, confirm=HUB_APP_NAME)
+    else:
+        print(f"{PROXY_APP_NAME} already has {DATABASE_GLOBAL_NAME} add-on attached.")
+    print("DATABASE ADD-ON INFO:")
+    for each in database_info:
+        print(f"{each}: {database_info[each]}")
 
     # Set config variable for proxy_url in hub app
     print("Saving proxy info to hub...")
