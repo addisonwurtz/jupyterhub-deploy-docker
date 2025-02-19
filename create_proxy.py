@@ -222,8 +222,8 @@ if __name__ == "__main__":
                     "PROXY_WEB_URL": proxy_info["web_url"],
                     "PROXY_AUTH_TOKEN": PROXY_AUTH_TOKEN,
                     "HEROKU_AUTH_TOKEN": HEROKU_AUTH_TOKEN,
-                    "DATABASE_URL": DATABASE_URL,
-                    "DATABASE_GLOBAL_NAME": DATABASE_GLOBAL_NAME
+                    #"DATABASE_URL": DATABASE_URL,
+                    #"DATABASE_GLOBAL_NAME": DATABASE_GLOBAL_NAME
                     } 
     set_config_vars(app_name=PROXY_APP_NAME, config_vars=proxy_config_vars)
 
