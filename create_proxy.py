@@ -181,7 +181,7 @@ if __name__ == "__main__":
     # query for current (hub) app url
     print("\n\nGetting hub app info...")
     hub_info = get_app_info(app_name=HUB_APP_NAME)
-    print("\n\nHUB INFO: ")
+    print("HUB INFO: ")
     for item in hub_info:
         print(f"{item}: {hub_info[item]}")
 
@@ -189,7 +189,7 @@ if __name__ == "__main__":
     proxy_info = create_heroku_app(app_name=PROXY_APP_NAME)
 
     # proxy_info = get_app_info(app_name=PROXY_APP_NAME)
-    print("\n\nPROXY INFO: ")
+    print("PROXY INFO: ")
     for item in proxy_info:
         print(f"{item}: {proxy_info[item]}")
     
