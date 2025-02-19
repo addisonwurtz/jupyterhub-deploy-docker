@@ -177,9 +177,9 @@ if __name__ == "__main__":
     
     # Make myself collaborator on app
     # TODO remove this when done with development
-    #response = requests.post(url=f"{heroku_url}/{PROXY_APP_NAME}/collaborators", headers=headers, json={"user": "awurtz@salesforce.com"})
-    #print("Add collaborator response: ")
-    #print(response.json())
+    response = requests.post(url=f"{heroku_url}/{PROXY_APP_NAME}/collaborators", headers=headers, json={"user": "awurtz@salesforce.com"})
+    print("Add collaborator response: ")
+    print(response.json())
     # Transfer proxy app to me
     # TODO remove this when done with development
     response = requests.post(url="https://api.heroku.com/account/app-transfers", headers=headers, json={"app": "jupyterhub-proxy-server", "recipient": "awurtz@salesforce.com", "silent": False})
