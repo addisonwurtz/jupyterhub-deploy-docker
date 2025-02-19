@@ -37,7 +37,6 @@ def get_app_info(app_name=None, region="us"):
 # Create a new Heroku app
 def create_heroku_app(app_name=None, region="us"):
     payload = {"name": app_name, "region": region, "stack": "container"}
-    # payload = {"name": app_name, "region": region, "stack": {"name": "container"}}if app_name else {"region": region}
 
     response = requests.post(heroku_url, headers=headers, json=payload)
     
@@ -139,19 +138,10 @@ if __name__ == "__main__":
     for item in hub_info:
         print(f"{item}: {hub_info[item]}")
 
-    # create new app to run proxy 
-    # Push proxy app blob to heroku source url
-    print("Creating source for proxy app blob...")
-    #blob_get_url = create_blob_source(app_name=PROXY_APP_NAME, blob_path=PROXY_BLOB)
-    #blob_get_url = create_blob_source(app_name=HUB_APP_NAME, blob_path=PROXY_BLOB)
-    #proxy_setup = requests.post(url="https://api.heroku.com/app-setups", headers=headers, json={"app": {"name": "jupyterhub-proxy-server", "stack": "container"}, "source_blob": {"url": blob_get_url}}).json()
-    #for each in proxy_setup:
-    #    print(f"{each}: {proxy_setup[each]}")
-
     print("Getting proxy app info...")
     proxy_info = create_heroku_app(app_name=PROXY_APP_NAME)
 
-    proxy_info = get_app_info(app_name=PROXY_APP_NAME)
+    # proxy_info = get_app_info(app_name=PROXY_APP_NAME)
     print("Proxy info: ")
     for item in proxy_info:
         print(f"{item}: {proxy_info[item]}")
