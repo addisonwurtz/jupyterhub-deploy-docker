@@ -14,10 +14,11 @@ python3 create_proxy.py
 echo "Proxy server app created"
 
 echo "Infinite loop for debugging..."
-while [ true ]
+while [ 1 ]
 do 
     sleep 5
     echo "..."
+done
 
 echo "Starting Jupyterhub..."
 jupyterhub --ConfigurableHTTPProxy.api_url="${PROXY_WEB_URL}:${PROXY_PORT}"
