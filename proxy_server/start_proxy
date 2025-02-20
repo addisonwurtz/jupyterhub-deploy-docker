@@ -6,5 +6,5 @@ echo "Database updated"
 
 
 echo "Starting proxy server..."
-configurable-http-proxy --ip=$PROXY_WEB_URL --port=$PORT --api-ip=$PROXY_WEB_URL --api-port=$PORT --default-target=${HUB_WEB_URL}:${HUB_PORT} --error-target=${HUB_WEB_URL}:${HUB_PORT}/hub/error
+configurable-http-proxy --ip=${PROXY_WEB_URL#https://} --port=$PORT --api-ip=${PROXY_WEB_URL#https://} --api-port=$PORT --default-target=${HUB_WEB_URL#https://}:${HUB_PORT} --error-target=${HUB_WEB_URL#htpps://}:${HUB_PORT}/hub/error
 echo "Proxy server running..."
