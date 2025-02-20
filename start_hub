@@ -24,5 +24,5 @@ export PS1='\[\033[01;34m\]\w\[\033[00m\]\$'
 #fi
 
 echo "Starting Jupyterhub..."
-exec juptyerhub
+exec jupyterhub
 #exec jupyterhub --ConfigurableHTTPProxy.api_url="${PROXY_WEB_URL}:${PROXY_PORT}"
