@@ -23,5 +23,4 @@ else
 
 
 echo "Starting Jupyterhub..."
-jupyterhub --ConfigurableHTTPProxy.api_url="${PROXY_WEB_URL}:${PROXY_PORT}"
-echo "Hub is running..."
+exec jupyterhub --ConfigurableHTTPProxy.api_url="${PROXY_WEB_URL}:${PROXY_PORT}"
