@@ -20,10 +20,12 @@ RUN mkdir -p /srv/configurable-http-proxy
 COPY . /srv/configurable-http-proxy/
 WORKDIR /srv/configurable-http-proxy
 
+RUN npm install pg
+RUN npm install -g configurable-http-proxy
 # Install configurable-http-proxy according to package-lock.json (ci) without
 # devDepdendencies (--production), then uninstall npm which isn't needed.
-RUN npm ci --production \
- && npm uninstall -g npm
+# RUN npm ci --production \
+# && npm uninstall -g npm
 
 # Switch from the root user to the nobody user
 USER 65534
