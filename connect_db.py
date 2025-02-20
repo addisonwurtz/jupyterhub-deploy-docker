@@ -34,7 +34,7 @@ if __name__ == "__main__":
         db_connection.close()
 
         # Exit and return proxy port 
-        exit(1)
+        exit(0)
 
     else:
         print("PROXY_PORT not found in app_config table.")
@@ -44,4 +44,4 @@ if __name__ == "__main__":
         db_connection.close()
 
         # Exit with value indicating failure
-        exit(0)
+        exit(1)

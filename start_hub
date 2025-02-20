@@ -15,6 +15,11 @@ echo "Proxy server app created"
 
 echo "Connecting to database"
 python3 connect_db.py
+if [ $? -ne 0 ]; then
+    echo "PROXY_PORT value not found."
+else 
+    export PROXY_PORT=$(cat proxy_port.txt)
+    echo "PROXY_PORT = $PROXY_PORT"
 
 
 echo "Starting Jupyterhub..."
