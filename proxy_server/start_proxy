@@ -41,7 +41,8 @@ case "$@" in
         # so that it is accessible to other containers
         # and when port-forwarding is requested.
         #ARGS="--api-ip=0.0.0.0" ;;
-        ARGS="--ip=${PROXY_WEB_URL#https://%/} --port=$PORT --api-ip=${PROXY_WEB_URL#https://%/} --api-port=$PORT --default-target=${HUB_WEB_URL}:${HUB_PORT} --error-target=${HUB_WEB_URL}:${HUB_PORT}/hub/error --log-level=debug";;
+        #ARGS="--ip=${PROXY_WEB_URL#https://%/} --port=$PORT --api-ip=${PROXY_WEB_URL#https://%/} --api-port=$PORT --default-target=${HUB_WEB_URL}:${HUB_PORT} --error-target=${HUB_WEB_URL}:${HUB_PORT}/hub/error --log-level=debug";;
+        ARGS="--ip=localhost --port=$PORT --api-ip=${PROXY_WEB_URL#https://%/} --api-port=$PORT --default-target=${HUB_WEB_URL}:${HUB_PORT} --error-target=${HUB_WEB_URL}:${HUB_PORT}/hub/error --log-level=debug";;
 esac
 
 exec configurable-http-proxy $ARGS "$@"
