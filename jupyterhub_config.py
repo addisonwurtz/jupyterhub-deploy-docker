@@ -42,10 +42,10 @@ c.DockerSpawner.remove = True
 c.DockerSpawner.debug = True
 
 # User containers will access hub by container name on the Docker network
-c.JupyterHub.hub_ip = "jupyterhub"
-c.JupyterHub.hub_port = 8080 
-# c.JupyterHub.hub_connect_ip = "jupyterhub"
-# c.JupyterHub.hub_port = int(os.environ.get("PORT"))
+#c.JupyterHub.hub_ip = "jupyterhub"
+#c.JupyterHub.hub_port = 8080 
+c.JupyterHub.hub_connect_ip = "localhost"
+c.JupyterHub.hub_port = int(os.environ.get("PORT"))
 
 # Persist hub data on volume mounted inside container
 c.JupyterHub.cookie_secret_file = "/srv/jupyterhub/jupyterhub_cookie_secret"
@@ -65,8 +65,13 @@ admin = os.environ.get("JUPYTERHUB_ADMIN")
 if admin:
     c.Authenticator.admin_users = [admin]
 
-# Config to run proxy seperately from the hub
-c.JupyterHub.cleanup_servers = False
-c.ConfigurableHTTPProxy.should_start = False
-#c.ConfigurableHTTPProxy.api_url = os.environ.get("PROXY_WEB_URL")
+c.JupyterHub.cleanup_servers = True 
+c.ConfigurableHTTPProxy.should_start = True 
+c.ConfigurableHTTPProxy.api_url = f'http://localhost:{int(os.environ.get("PORT"))}'
 c.ConfigurableHTTPProxy.auth_token = os.environ.get("PROXY_AUTH_TOKEN")
+
+# Config to run proxy seperately from the hub
+#c.JupyterHub.cleanup_servers = False
+#c.ConfigurableHTTPProxy.should_start = False
+#c.ConfigurableHTTPProxy.api_url = os.environ.get("PROXY_WEB_URL")
+#c.ConfigurableHTTPProxy.auth_token = os.environ.get("PROXY_AUTH_TOKEN")
