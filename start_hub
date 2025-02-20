@@ -13,6 +13,10 @@ echo "Creating app for proxy server..."
 python3 create_proxy.py
 echo "Proxy server app created"
 
+echo "Connecting to database"
+python3 connect_db.py
+
+
 echo "Starting Jupyterhub..."
 jupyterhub --ConfigurableHTTPProxy.api_url="${PROXY_WEB_URL}:${PROXY_PORT}"
 echo "Hub is running..."
