@@ -97,7 +97,7 @@ def attach_addon(app_name, addon_name, confirm=None):
         data["confirm"] = confirm
     response = requests.post(url=request_url, headers=headers, json=data)
 
-    if response.status_code == 200:
+    if response.status_code == 201:
         print(f"Add-on {addon_name} was successfully attatched to {app_name}.")
         return response.json()
     else:
