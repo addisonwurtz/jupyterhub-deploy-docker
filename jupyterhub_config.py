@@ -44,8 +44,10 @@ c.DockerSpawner.debug = True
 # User containers will access hub by container name on the Docker network
 #c.JupyterHub.hub_ip = "jupyterhub"
 #c.JupyterHub.hub_port = 8080 
-c.JupyterHub.bind_url = f"{os.environ.get('WEB_URL')}:{os.environ.get('PORT')}"
-c.JupyterHub.hub_connect_ip = os.environ.get("WEB_URL") 
+#c.JupyterHub.bind_url = f"{os.environ.get('WEB_URL')}:{os.environ.get('PORT')}"
+c.JupyterHub.bind_url = f"http://0.0.0.0:{os.environ.get('PORT')}"
+#c.JupyterHub.hub_connect_ip = os.environ.get("WEB_URL") 
+c.JupyterHub.hub_connect_ip = os.environ.get("WEB_URL", "0.0.0.0") 
 c.JupyterHub.hub_port = int(os.environ.get("PORT"))
 
 # Persist hub data on volume mounted inside container
