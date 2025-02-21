@@ -20,7 +20,6 @@ RUN mkdir -p /srv/configurable-http-proxy
 COPY . /srv/configurable-http-proxy/
 WORKDIR /srv/configurable-http-proxy
 
-RUN npm install -g npm@11.1.0
 RUN npm install pg
 RUN npm install -g configurable-http-proxy
 # Install configurable-http-proxy according to package-lock.json (ci) without
