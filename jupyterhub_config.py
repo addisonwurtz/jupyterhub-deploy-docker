@@ -13,7 +13,6 @@ c = get_config()  # noqa: F821
 #c.JupyterHub.port = os.environ["PORT"]
 
 # Spawn single-user servers as Docker containers
-# c.JupyterHub.spawner_class = 'sudospawner.Sudospawner'
 c.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'
 
 # Spawn containers from this image
@@ -42,8 +41,6 @@ c.DockerSpawner.remove = True
 c.DockerSpawner.debug = True
 
 # User containers will access hub by container name on the Docker network
-#c.JupyterHub.hub_ip = "jupyterhub"
-#c.JupyterHub.hub_port = 8080 
 #c.JupyterHub.bind_url = f"{os.environ.get('WEB_URL')}:{os.environ.get('PORT')}"
 c.JupyterHub.bind_url = f"http://0.0.0.0:{os.environ.get('PORT')}"
 #c.JupyterHub.hub_connect_ip = os.environ.get("WEB_URL") 
@@ -69,14 +66,14 @@ admin = os.environ.get("JUPYTERHUB_ADMIN")
 if admin:
     c.Authenticator.admin_users = [admin]
 
-#c.JupyterHub.cleanup_servers = True 
-#c.ConfigurableHTTPProxy.should_start = True 
-#c.ConfigurableHTTPProxy.api_url = f'http://localhost:{int(os.environ.get("PORT"))}'
-#c.ConfigurableHTTPProxy.auth_token = os.environ.get("CONFIGPROXY_AUTH_TOKEN")
+c.JupyterHub.proxy_class = "traefik_file"
+c.JupyterHub.cleanup_servers = True 
+c.ConfigurableHTTPProxy.should_start = True 
+c.ConfigurableHTTPProxy.api_url = f'http://localhost:{int(os.environ.get("PORT"))}'
+c.ConfigurableHTTPProxy.auth_token = os.environ.get("CONFIGPROXY_AUTH_TOKEN")
 
 # Config to run proxy seperately from the hub
-c.JupyterHub.cleanup_servers = False
-c.ConfigurableHTTPProxy.should_start = False
+#c.JupyterHub.cleanup_servers = False
+#c.ConfigurableHTTPProxy.should_start = False
 #c.ConfigurableHTTPProxy.api_url = os.environ.get("PROXY_WEB_URL")
-c.ConfigurableHTTPProxy.api_url = os.environ.get("PROXY_WEB_URL")
-c.ConfigurableHTTPProxy.auth_token = os.environ.get("CONFIGPROXY_AUTH_TOKEN")
+#c.ConfigurableHTTPProxy.auth_token = os.environ.get("CONFIGPROXY_AUTH_TOKEN")
