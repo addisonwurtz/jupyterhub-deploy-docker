@@ -23,8 +23,8 @@ RUN apt install -y git
 
 # Install dockerspawner, nativeauthenticator
 RUN python3 -m pip install --no-cache-dir --upgrade pip
-RUN python3 -m jupyterhub_traefik_proxy.install --output=/usr/local/bin
 RUN python3 -m pip install --no-cache-dir dockerspawner jupyterhub-nativeauthenticator psycopg2-binary jupyterhub-traefik-proxy
+RUN python3 -m jupyterhub_traefik_proxy.install --output=/usr/local/bin
 
 # TODO: update CMD to reflect heroku.yml file
 CMD ["sh", "-c", "jupyterhub", "-f", "/srv/jupyterhub/jupyterhub_config.py", "--port=${PORT}"]
