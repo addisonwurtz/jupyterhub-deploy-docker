@@ -23,6 +23,9 @@ else
     echo "PROXY_PORT = $PROXY_PORT"
 fi
 
+echo "Sleeping to give proxy app time to start up"
+sleep 10
+
 echo " Proxy web url: $PROXY_WEB_URL"
 echo "Starting Jupyterhub..."
 exec jupyterhub --ConfigurableHTTPProxy.api_url="${PROXY_WEB_URL}:${PROXY_PORT}" --debug
