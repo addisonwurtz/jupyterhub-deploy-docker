@@ -45,10 +45,8 @@ echo "Database updated"
 #        ARGS="--ip=localhost --port=$PORT --api-ip=${PROXY_WEB_URL#https://%/} --api-port=$PORT --default-target=${HUB_WEB_URL}:${HUB_PORT} --error-target=${HUB_WEB_URL}:${HUB_PORT}/hub/error --log-level=debug";;
 #esac
 
-ARGS="--ip=localhost --port=$PORT --api-ip=${PROXY_WEB_URL#https://%/} --api-port=$PORT --default-target=${HUB_WEB_URL}:${HUB_PORT} --error-target=${HUB_WEB_URL}:${HUB_PORT}/hub/error --log-level=debug"
+#ARGS="--ip=localhost --port=$PORT --api-ip=${PROXY_WEB_URL#https://%/} --api-port=$PORT --default-target=${HUB_WEB_URL}:${HUB_PORT} --error-target=${HUB_WEB_URL}:${HUB_PORT}/hub/error --log-level=debug"
 
 echo "Starting proxy server..."
-exec configurable-http-proxy $ARGS "$@"
-
-#configurable-http-proxy --ip=${PROXY_WEB_URL#https://%/} --port=$PORT --api-ip=${PROXY_WEB_URL#https://%/} --api-port=$PORT --default-target=${HUB_WEB_URL}:${HUB_PORT} --error-target=${HUB_WEB_URL}:${HUB_PORT}/hub/error --log-level=debug
-#echo "Proxy server running..."
+#exec configurable-http-proxy $ARGS "$@"
+exec configurable-http-proxy --ip=${PROXY_WEB_URL#https://%/} --port=$PORT --api-ip=${PROXY_WEB_URL#https://%/} --api-port=$PORT --default-target=${HUB_WEB_URL}:${HUB_PORT} --error-target=${HUB_WEB_URL}:${HUB_PORT}/hub/error --log-level=debug
