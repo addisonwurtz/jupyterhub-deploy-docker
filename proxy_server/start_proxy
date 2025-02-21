@@ -47,7 +47,8 @@ echo "Database updated"
 
 #ARGS="--ip=localhost --port=$PORT --api-ip=${PROXY_WEB_URL#https://%/} --api-port=$PORT --default-target=${HUB_WEB_URL}:${HUB_PORT} --error-target=${HUB_WEB_URL}:${HUB_PORT}/hub/error --log-level=debug"
 
-echo "PROXY WEB URL: ${PROXY_WEB_URL#https://%/}"
+CLEAN_URL="${PROXY_WEB_URL#https://}"
+echo "PROXY WEB URL CLEAN: $CLEAN_URL"
 echo "Starting proxy server..."
 #exec configurable-http-proxy $ARGS "$@"
 exec configurable-http-proxy --ip=${PROXY_WEB_URL#https://%/} --port=$PORT --api-ip=${PROXY_WEB_URL#https://%/} --api-port=$PORT --default-target=${HUB_WEB_URL}:${HUB_PORT} --error-target=${HUB_WEB_URL}:${HUB_PORT}/hub/error --log-level=debug
