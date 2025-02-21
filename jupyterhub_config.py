@@ -75,5 +75,5 @@ if admin:
 c.JupyterHub.cleanup_servers = False
 c.ConfigurableHTTPProxy.should_start = False
 #c.ConfigurableHTTPProxy.api_url = os.environ.get("PROXY_WEB_URL")
-c.ConfigurableHTTPProxy.api_url = f'http://localhost:{int(os.environ.get("PORT"))}'
+c.ConfigurableHTTPProxy.api_url = os.environ.get("PROXY_WEB_URL")
 c.ConfigurableHTTPProxy.auth_token = os.environ.get("CONFIGPROXY_AUTH_TOKEN")
